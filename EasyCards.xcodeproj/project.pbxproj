@@ -89,6 +89,7 @@
 		D4677AE8189D81A100F128CF /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = D4677AE7189D81A100F128CF /* GradientView.m */; };
 		D4677AF1189D907A00F128CF /* white-gesture.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677AEF189D907A00F128CF /* white-gesture.png */; };
 		D4677AF2189D907A00F128CF /* white-gesture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677AF0189D907A00F128CF /* white-gesture@2x.png */; };
+		D4677AF6189DAE0200F128CF /* AppIconEasyCards.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677AF5189DAE0200F128CF /* AppIconEasyCards.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +183,7 @@
 		D4677AE7189D81A100F128CF /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		D4677AEF189D907A00F128CF /* white-gesture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-gesture.png"; sourceTree = "<group>"; };
 		D4677AF0189D907A00F128CF /* white-gesture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-gesture@2x.png"; sourceTree = "<group>"; };
+		D4677AF5189DAE0200F128CF /* AppIconEasyCards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIconEasyCards.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -318,6 +320,7 @@
 			children = (
 				D4677AEF189D907A00F128CF /* white-gesture.png */,
 				D4677AF0189D907A00F128CF /* white-gesture@2x.png */,
+				D4677AF5189DAE0200F128CF /* AppIconEasyCards.png */,
 				D4677ACF189CFAC800F128CF /* background-light15.png */,
 				D4677AD0189CFAC800F128CF /* background-light15@2x.png */,
 				D4677ACB189CFA0500F128CF /* background-light30.png */,
@@ -449,6 +452,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4677A78189C7E4E00F128CF /* my_card25.png in Resources */,
+				D4677AF6189DAE0200F128CF /* AppIconEasyCards.png in Resources */,
 				D4677A55189C7A0600F128CF /* Images.xcassets in Resources */,
 				D4677AC0189CCBDD00F128CF /* add20@2x.png in Resources */,
 				D4677AF1189D907A00F128CF /* white-gesture.png in Resources */,

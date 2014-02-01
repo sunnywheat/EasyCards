@@ -7,6 +7,7 @@
 //
 
 #import "CollectionViewController.h"
+#import <Parse/Parse.h>
 
 @interface CollectionViewController ()
 
@@ -14,13 +15,89 @@
 
 @implementation CollectionViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (void)viewWillAppear:(BOOL)animated
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+    
+    self.allProfileImages = nil;
+    self.allBackgroundImages = nil;
+    self.allNames = nil;
+    self.allDescriptions = nil;
+    self.allPhones = nil;
+    self.allTwitters = nil;
+    self.allEmails = nil;
+    self.allAddressLineOnes = nil;
+    self.allAddressLineTwos = nil;
+    self.allCreateDates = nil;
+    //self.allObjectIds = nil;
+    
+    self.allProfileImages = [[NSMutableArray alloc] init];
+    self.allBackgroundImages = [[NSMutableArray alloc] init];
+    self.allNames = [[NSMutableArray alloc] init];
+    self.allDescriptions = [[NSMutableArray alloc] init];
+    self.allPhones = [[NSMutableArray alloc] init];
+    self.allTwitters = [[NSMutableArray alloc] init];
+    self.allEmails = [[NSMutableArray alloc] init];
+    self.allAddressLineOnes = [[NSMutableArray alloc] init];
+    self.allAddressLineTwos = [[NSMutableArray alloc] init];
+    self.allCreateDates = [[NSMutableArray alloc] init];
+    //self.allObjectIds = [[NSMutableArray alloc] init];
+    
+    self.allReceivedCardIDs = [[NSUserDefaults standardUserDefaults] objectForKey:@"AllReceivedCardIDs"];
+    NSLog(@"%@", self.allReceivedCardIDs);
+    
+    for (NSString *queryObjectId in self.allReceivedCardIDs) {
+        
+        NSLog(@"query object id: %@", queryObjectId);
+        
+        PFQuery *query = [PFQuery queryWithClassName:@"Card"];
+        [query getObjectInBackgroundWithId:queryObjectId block:^(PFObject *card, NSError *error) {
+            
+            NSString *cardDataStr = [card objectForKey:@"cardDataStr"];
+            NSArray *cardDataArr = [cardDataStr componentsSeparatedByString:@"#&"];
+            
+            [self.allNames addObject:cardDataArr[0]];
+            [self.allDescriptions addObject:cardDataArr[1]];
+            [self.allPhones addObject:cardDataArr[2]];
+            [self.allTwitters addObject:cardDataArr[3]];
+            [self.allEmails addObject:cardDataArr[4]];
+            [self.allAddressLineOnes addObject:cardDataArr[5]];
+            [self.allAddressLineTwos addObject:cardDataArr[6]];
+            //[self.allObjectIds addObject:card.objectId];
+            
+            NSDate *createDate = card.createdAt;
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+            NSString *createDateStr = [dateFormatter stringFromDate:createDate];
+            [self.allCreateDates addObject:[NSString stringWithFormat:@"Created: %@", createDateStr]];
+            
+            PFFile *profileImgViewFile = [card objectForKey:@"profileImg"];
+            [profileImgViewFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                if (!error) {
+                    UIImage *profileImage = [UIImage imageWithData:data];
+                    [self.allProfileImages addObject:profileImage];
+                    
+                    
+                }
+            }];
+            
+            PFFile *backgroundImgFile = [card objectForKey:@"backgroundImg"];
+            [backgroundImgFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                if (!error) {
+                    UIImage *backgroundImage = [UIImage imageWithData:data];
+                    [self.allBackgroundImages addObject:backgroundImage];
+                    
+                    if ([queryObjectId isEqualToString:[self.allReceivedCardIDs lastObject]]) {
+                        NSLog(@"Loading last card now...");
+                        [self.tableView reloadData];
+                    }
+                    
+                }
+            }];
+        
+            
+        }];
     }
-    return self;
+
 }
 
 - (void)viewDidLoad
@@ -34,12 +111,6 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -51,7 +122,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 1;
+    // return [self.allReceivedCardIDs count];
+    return [self.allBackgroundImages count];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 200;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -59,7 +136,37 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    UIImageView *backgroundImageView = (UIImageView *)[cell viewWithTag:1000];
+    backgroundImageView.layer.cornerRadius = 4.0f;
+    backgroundImageView.layer.masksToBounds = YES;
+    UIImageView *profileImageView = (UIImageView *)[cell viewWithTag:1001];
+    
+    UILabel *categoryLabel = (UILabel *)[cell viewWithTag:2000];
+    
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:2001];
+    UILabel *descriptionLabel = (UILabel *)[cell viewWithTag:2002];
+    UILabel *phoneLabel = (UILabel *)[cell viewWithTag:2003];
+    UILabel *twitterLabel = (UILabel *)[cell viewWithTag:2004];
+    UILabel *emailLabel = (UILabel *)[cell viewWithTag:2005];
+    UILabel *addressLineOneLabel = (UILabel *)[cell viewWithTag:2006];
+    UILabel *addressLineTwoLabel = (UILabel *)[cell viewWithTag:2007];
+    
+    NSLog(@"%d", [self.allBackgroundImages count]);
+    
+    [backgroundImageView setImage:self.allBackgroundImages[indexPath.row]];
+    [profileImageView setImage:self.allProfileImages[indexPath.row]];
+    nameLabel.text = self.allNames[indexPath.row];
+    descriptionLabel.text = self.allDescriptions[indexPath.row];
+    phoneLabel.text = self.allPhones[indexPath.row];
+    twitterLabel.text = self.allTwitters[indexPath.row];
+    emailLabel.text = self.allEmails[indexPath.row];
+    addressLineOneLabel.text = self.allAddressLineOnes[indexPath.row];
+    addressLineTwoLabel.text = self.allAddressLineTwos[indexPath.row];
+    
+    //objectIdLabel.text = self.allObjectIds[indexPath.row];
+    
+    categoryLabel.text = self.allCreateDates[indexPath.row];
+    categoryLabel.text = @"From Paul Wong";
     
     return cell;
 }

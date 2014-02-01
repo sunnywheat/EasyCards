@@ -29,4 +29,6 @@
 @property (nonatomic, strong) NSMutableArray *allAddressLineTwos;
 @property (nonatomic, strong) NSMutableArray *allCreateDates;
 
+@property (nonatomic, strong) NSMutableArray *allObjectIds;
+
 @end

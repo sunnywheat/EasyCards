@@ -9,6 +9,7 @@
 #import "ReceivingViewController.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "TransferService.h"
+#import <Parse/Parse.h>
 
 @interface ReceivingViewController () <CBCentralManagerDelegate, CBPeripheralDelegate>
 
@@ -22,8 +23,6 @@
 
 #pragma mark - View Lifecycle
 
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -32,6 +31,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    self.backgroundView.hidden = YES;
     
     // Start up the CBCentralManager
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
@@ -50,8 +51,6 @@
 }
 
 #pragma mark - Central Methods
-
-
 
 /** centralManagerDidUpdateState is a required protocol method.
  *  Usually, you'd check for other states to make sure the current device supports LE, is powered on, etc.
@@ -222,6 +221,140 @@
         // [self.textview setText:[[NSString alloc] initWithData:self.data encoding:NSUTF8StringEncoding]];
         NSLog(@"Received Info Text: %@", [[NSString alloc] initWithData:self.data encoding:NSUTF8StringEncoding]);
         
+        NSString *objectIdReceived = [[NSString alloc] initWithData:self.data encoding:NSUTF8StringEncoding];
+        // This is when objectId is fully received, now is the time to pull from Parse and make some cool animation!
+        PFQuery *query = [PFQuery queryWithClassName:@"Card"];
+        [query getObjectInBackgroundWithId:objectIdReceived block:^(PFObject *card, NSError *error) {
+            
+            UIImageView *backgroundImageView = (UIImageView *)[self.view viewWithTag:1000];
+            UIImageView *profileImageView = (UIImageView *)[self.view viewWithTag:1001];
+            
+            UILabel *nameLabel = (UILabel *)[self.view viewWithTag:2001];
+            UILabel *descriptionLabel = (UILabel *)[self.view viewWithTag:2002];
+            UILabel *phoneLabel = (UILabel *)[self.view viewWithTag:2003];
+            UILabel *twitterLabel = (UILabel *)[self.view viewWithTag:2004];
+            UILabel *emailLabel = (UILabel *)[self.view viewWithTag:2005];
+            UILabel *addressLineOneLabel = (UILabel *)[self.view viewWithTag:2006];
+            UILabel *addressLineTwoLabel = (UILabel *)[self.view viewWithTag:2007];
+            
+            NSString *cardDataStr = [card objectForKey:@"cardDataStr"];
+            NSArray *cardDataArr = [cardDataStr componentsSeparatedByString:@"#&"];
+            
+            PFFile *profileImgViewFile = [card objectForKey:@"profileImg"];
+            [profileImgViewFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                if (!error) {
+                    UIImage *profileImage = [UIImage imageWithData:data];
+                    
+                    
+                    PFFile *backgroundImgFile = [card objectForKey:@"backgroundImg"];
+                    [backgroundImgFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                        if (!error) {
+                            
+                            UIImage *backgroundImage = [UIImage imageWithData:data];
+                            
+                            backgroundImageView.image = backgroundImage;
+                            profileImageView.image = profileImage;
+                            nameLabel.text = cardDataArr[0];
+                            descriptionLabel.text = cardDataArr[1];
+                            phoneLabel.text = cardDataArr[2];
+                            twitterLabel.text = cardDataArr[3];
+                            emailLabel.text = cardDataArr[4];
+                            addressLineOneLabel.text = cardDataArr[5];
+                            addressLineTwoLabel.text = cardDataArr[6];
+                            
+                            self.backgroundView.hidden = NO;
+                            
+                            // Add animation
+                            
+                            /*
+                            // Animation for the card popping up and rotating and scaling
+                            CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+                            rotateAnimation.fromValue = [NSNumber numberWithFloat:0];
+                            rotateAnimation.toValue = [NSNumber numberWithFloat:-0.5*M_PI];
+                            rotateAnimation.duration = 1.0f;
+                            // CABasicAnimation default duration is 0.25 second if not specified...
+                            rotateAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+                            UIView *backgroundView = self.backgroundView;
+                             
+                            rotateAnimation.removedOnCompletion = NO;
+                            rotateAnimation.fillMode = kCAFillModeForwards;
+                             
+                            [self.backgroundView.layer addAnimation:rotateAnimation forKey:@"rotateAnimation"];
+                            
+                             
+                             
+                            CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+                            scaleAnimation.fromValue = [NSNumber numberWithFloat:0.7f];
+                            scaleAnimation.toValue = [NSNumber numberWithFloat:1.3f];
+                            scaleAnimation.duration = 1.0f;
+                            
+                            scaleAnimation.removedOnCompletion = NO;
+                            scaleAnimation.fillMode = kCAFillModeForwards;
+                            
+                            [self.backgroundView.layer addAnimation:scaleAnimation forKey:@"scaleAnimation"];
+                            */
+                            
+                            // Start animating (moving out of the screen)
+                            CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"transform.translation.y"];
+                            theAnimation.duration=1;
+                            theAnimation.fromValue=[NSNumber numberWithFloat:-568];
+                            theAnimation.toValue=[NSNumber numberWithFloat:0];
+                            theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+                            theAnimation.removedOnCompletion = NO;
+                            theAnimation.fillMode = kCAFillModeForwards;
+                            
+                            [self.backgroundView.layer addAnimation:theAnimation forKey:@"translation.y"];
+                            
+                            CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+                            rotateAnimation.fromValue = [NSNumber numberWithFloat:-0.5*M_PI];
+                            rotateAnimation.toValue = [NSNumber numberWithFloat:-0.5*M_PI];
+                            rotateAnimation.duration = 1.0f;
+                            // CABasicAnimation default duration is 0.25 second if not specified...
+                            rotateAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+                            
+                            rotateAnimation.removedOnCompletion = NO;
+                            rotateAnimation.fillMode = kCAFillModeForwards;
+                            
+                            [self.backgroundView.layer addAnimation:rotateAnimation forKey:@"rotateAnimation"];
+                            
+                            
+                            CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+                            scaleAnimation.fromValue = [NSNumber numberWithFloat:2.0f];
+                            scaleAnimation.toValue = [NSNumber numberWithFloat:1.3f];
+                            scaleAnimation.duration = 1.0f;
+                            
+                            scaleAnimation.removedOnCompletion = NO;
+                            scaleAnimation.fillMode = kCAFillModeForwards;
+                            
+                            [self.backgroundView.layer addAnimation:scaleAnimation forKey:@"scaleAnimation"];
+                            
+                            // Store in NSUserDefaults receivedObjectIds
+                            
+                            self.allReceivedCardIDs = [[[NSUserDefaults standardUserDefaults] objectForKey:@"AllReceivedCardIDs"] mutableCopy];
+                            if (self.allReceivedCardIDs == nil) {
+                                self.allReceivedCardIDs = [[NSMutableArray alloc] init];
+                            }
+                            [self.allReceivedCardIDs insertObject:objectIdReceived atIndex:0];
+                            [[NSUserDefaults standardUserDefaults] setObject:self.allReceivedCardIDs forKey:@"AllReceivedCardIDs"];
+                            
+                            
+                            [self performSelector:@selector(rotateAndShrink) withObject:self afterDelay:3.0f];
+                            
+                            
+                            
+                            
+                            // Deal with Collection of Cards displaying!!!
+                            
+                        }
+                    }];
+                    
+                }
+            }];
+            
+
+            
+        }];
+        
         // Cancel our subscription to the characteristic
         [peripheral setNotifyValue:NO forCharacteristic:characteristic];
         
@@ -234,6 +367,34 @@
     
     // Log it
     NSLog(@"Received: %@", stringFromData);
+}
+
+- (void)rotateAndShrink
+{
+    CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotateAnimation.fromValue = [NSNumber numberWithFloat:-0.5*M_PI];
+    rotateAnimation.toValue = [NSNumber numberWithFloat:0];
+    rotateAnimation.duration = 1.0f;
+    // CABasicAnimation default duration is 0.25 second if not specified...
+    rotateAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    
+    rotateAnimation.removedOnCompletion = NO;
+    rotateAnimation.fillMode = kCAFillModeForwards;
+    
+    [self.backgroundView.layer addAnimation:rotateAnimation forKey:@"rotateAnimation"];
+    
+
+    CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    scaleAnimation.fromValue = [NSNumber numberWithFloat:1.3f];
+    scaleAnimation.toValue = [NSNumber numberWithFloat:1.0f];
+    scaleAnimation.duration = 1.0f;
+    
+    scaleAnimation.removedOnCompletion = NO;
+    scaleAnimation.fillMode = kCAFillModeForwards;
+    [self.backgroundView.layer addAnimation:scaleAnimation forKey:@"scaleAnimation"];
+
+    
+    NSLog(@"transfer is complete!");
 }
 
 

@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ReceivingViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UIView *backgroundView;
+@property (strong, nonatomic) NSMutableArray *allReceivedCardIDs;
 
 @end

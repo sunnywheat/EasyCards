@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TransferService.h"
 
 @interface CardDetailViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIView *backgroundView;
 @property (strong, nonatomic) IBOutlet UIButton *gestureButton;
+
+@property (strong, nonatomic) NSString *objectIdToBroadcast;
 
 
 - (void)presentInParentViewController:(UIViewController *)parentViewController;
