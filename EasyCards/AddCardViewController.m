@@ -32,19 +32,18 @@
     
     // Start from !
     // Totally 9 strings
-    self.cardDataString = [NSMutableString stringWithFormat:@"%@",  @"!#EC##N##"];
-    [self.cardDataString appendString: self.nameTextField.text];
-    [self.cardDataString appendString: @"!#EC##D##"];
+    self.cardDataString = [NSMutableString stringWithFormat:@"%@",  self.nameTextField.text];
+    [self.cardDataString appendString: @"#&"];
     [self.cardDataString appendString: self.descriptionTextField.text];
-    [self.cardDataString appendString: @"!#EC##P##"];
+    [self.cardDataString appendString: @"#&"];
     [self.cardDataString appendString: self.phoneTextField.text];
-    [self.cardDataString appendString: @"!#EC##T##"];
+    [self.cardDataString appendString: @"#&"];
     [self.cardDataString appendString: self.twitterTextField.text];
-    [self.cardDataString appendString: @"!#EC##E##"];
+    [self.cardDataString appendString: @"#&"];
     [self.cardDataString appendString: self.emailTextField.text];
-    [self.cardDataString appendString: @"!#EC##A1#"];
+    [self.cardDataString appendString: @"#&"];
     [self.cardDataString appendString: self.addressLineOneTextField.text];
-    [self.cardDataString appendString: @"!#EC##A2#"];
+    [self.cardDataString appendString: @"#&"];
     [self.cardDataString appendString: self.addressLineTwoTextField.text];
     
     NSLog(@"Card Information Data: %@",self.cardDataString);
@@ -62,8 +61,21 @@
         
         if (succeeded){
             NSLog(@"Object Uploaded!");
-            self.cardID = [NSString stringWithFormat:@"%@", [newCard objectId]];
+            self.cardID = [NSMutableString stringWithFormat:@"%@", [newCard objectId]];
             NSLog(@"Object id %@",self.cardID);
+            // cardID is generated here
+            // Retrieve Data, putting to previousSumCardID
+            NSString *previousSumCardID =[[NSUserDefaults standardUserDefaults] stringForKey:@"Key"];
+            self.currentSumCardID = [NSMutableString stringWithFormat:@"%@",  previousSumCardID];
+            // Insert #* into two cardIDs
+            [self.currentSumCardID appendString: @" "];
+            [self.currentSumCardID appendString: self.cardID];
+            
+            // Save currentSumCardID into Key, NSUserDefaults
+            [[NSUserDefaults standardUserDefaults] setObject:self.currentSumCardID forKey:@"Key"];
+            NSLog(@"%@",self.currentSumCardID);
+            self.cardID = nil;
+            
         }
         else{
             NSString *errorString = [[error userInfo] objectForKey:@"error"];
@@ -118,27 +130,32 @@
     }];
     
     
-    /*
+    
     // Make sure to check this.
     NSLog(@"We want to fetch data using this cardID %@", self.cardID);
     
     // Here I just take a case as the example
-    self.cardID = [NSString stringWithFormat:@"%@", @"PD2Lh6F4Nu"];
+    self.cardID = [NSMutableString stringWithFormat:@"%@", @"kPzcNx68hH"];
     
-
+    
     PFQuery *query = [PFQuery queryWithClassName:@"Card"];
-    // [query whereKey:@"objectId" equalTo:@"PD2Lh6F4Nu"];
-    // NSArray* cardArray = [query findObjects];
-    // This line would make the app crash.
-    //NSLog(@"Finally we query this : %@", [cardArray objectAtIndex:2]);
-    // Check this for the reason. http://stackoverflow.com/questions/16691556/app-crashing-becuase-nsarray-objectforkey-objective-c
-
-    
-    
     [query getObjectInBackgroundWithId:self.cardID block:^(PFObject *recievedCard, NSError *error) {
-        // Do something with the returned PFObject in the gameScore variable.
+        // Do something with the returned PFObject in the recievedCard variable.
         NSString *recievedData = recievedCard[@"cardDataString"];
+        //NSLog(@"%@", recievedData);
+        NSArray *recievedDataArray = [recievedData componentsSeparatedByString:@"#&"];
+        //NSLog(@"%@", recievedDataArray);
+        self.nameRecieved = [recievedDataArray objectAtIndex:0];
+        self.descriptionRecieved = [recievedDataArray objectAtIndex:1];
+        self.phoneRecieved = [recievedDataArray objectAtIndex:2];
+        self.twitterRecieved = [recievedDataArray objectAtIndex:3];
+        self.emailRecieved = [recievedDataArray objectAtIndex:4];
+        self.addressLineOneRecieved = [recievedDataArray objectAtIndex:5];
+        self.addressLineTwoRecieved = [recievedDataArray objectAtIndex:6];
         
+        // NSLog(@"%@", self.addressLineOneRecieved);
+        
+<<<<<<< HEAD
         NSLog(@"%@", recievedData);
         // NSString *objectId = [recievedCard cardDataString];
         // NSLog(@"Finally we query this objectId: %@", objectId);
@@ -152,8 +169,10 @@
 //        }
     
     
+=======
+>>>>>>> f2017ef3e15d27aa0dcef0ce4b22bba3de3e0cd6
     }];
-    */
+    
     
     
 }

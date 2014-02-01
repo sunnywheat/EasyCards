@@ -29,15 +29,28 @@
 @property (strong, nonatomic) IBOutlet UITextField *addressLineOneTextField;
 @property (strong, nonatomic) IBOutlet UITextField *addressLineTwoTextField;
 
+// Receive data
+@property (nonatomic, strong) NSString *nameRecieved;
+@property (nonatomic, strong) NSString *descriptionRecieved;
+@property (nonatomic, strong) NSString *phoneRecieved;
+@property (nonatomic, strong) NSString *twitterRecieved;
+@property (nonatomic, strong) NSString *emailRecieved;
+@property (nonatomic, strong) NSString *addressLineOneRecieved;
+@property (nonatomic, strong) NSString *addressLineTwoRecieved;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 
 
 @property (nonatomic, strong) NSString *cardCategory;
 
-// cardID is for bluetooth trasmittion.
-@property (nonatomic,assign) NSString *cardID;
+// Please no NSString anymore during hackathon
+// cardID is for bluetooth trasmittion
+@property (nonatomic,assign) NSMutableString *cardID;
+// Save cardID string value to NSUserDefaults
+@property (nonatomic,assign) NSMutableString *currentSumCardID;
+
 // cardDataString would be used for several time to store Name, Phone, Email and so on
+// String is sent to Parse
 @property (nonatomic,assign) NSMutableString *cardDataString;
 
 
