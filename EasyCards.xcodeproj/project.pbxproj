@@ -58,8 +58,6 @@
 		D4677A7F189C877100F128CF /* MyCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4677A7E189C877100F128CF /* MyCardsViewController.m */; };
 		D4677A82189C879300F128CF /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4677A81189C879300F128CF /* CollectionViewController.m */; };
 		D4677A85189C883400F128CF /* ReceivingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4677A84189C883400F128CF /* ReceivingViewController.m */; };
-		D4677A8A189CA16E00F128CF /* template-bg-personal.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677A88189CA16E00F128CF /* template-bg-personal.png */; };
-		D4677A8B189CA16E00F128CF /* template-bg-personal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677A89189CA16E00F128CF /* template-bg-personal@2x.png */; };
 		D4677A8D189CA29900F128CF /* Paul-G-Glass.JPG in Resources */ = {isa = PBXBuildFile; fileRef = D4677A8C189CA29900F128CF /* Paul-G-Glass.JPG */; };
 		D4677A90189CA30200F128CF /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = D4677A8F189CA30200F128CF /* UIImage+Resize.m */; };
 		D4677A92189CA47100F128CF /* wellnessclub.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4677A91189CA47100F128CF /* wellnessclub.jpg */; };
@@ -82,6 +80,8 @@
 		D4677AD1189CFAC800F128CF /* background-light15.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ACF189CFAC800F128CF /* background-light15.png */; };
 		D4677AD2189CFAC800F128CF /* background-light15@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677AD0189CFAC800F128CF /* background-light15@2x.png */; };
 		D4677AD5189D122900F128CF /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4677AD4189D122900F128CF /* CoreBluetooth.framework */; };
+		D4677ADB189D797300F128CF /* template-bg-personal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677AD9189D797300F128CF /* template-bg-personal@2x.png */; };
+		D4677ADC189D797300F128CF /* template-bg-personal.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ADA189D797300F128CF /* template-bg-personal.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,8 +138,6 @@
 		D4677A81189C879300F128CF /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 		D4677A83189C883400F128CF /* ReceivingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceivingViewController.h; sourceTree = "<group>"; };
 		D4677A84189C883400F128CF /* ReceivingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceivingViewController.m; sourceTree = "<group>"; };
-		D4677A88189CA16E00F128CF /* template-bg-personal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "template-bg-personal.png"; sourceTree = "<group>"; };
-		D4677A89189CA16E00F128CF /* template-bg-personal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "template-bg-personal@2x.png"; sourceTree = "<group>"; };
 		D4677A8C189CA29900F128CF /* Paul-G-Glass.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Paul-G-Glass.JPG"; sourceTree = "<group>"; };
 		D4677A8E189CA30200F128CF /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		D4677A8F189CA30200F128CF /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
@@ -166,6 +164,8 @@
 		D4677AD0189CFAC800F128CF /* background-light15@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-light15@2x.png"; sourceTree = "<group>"; };
 		D4677AD3189D116E00F128CF /* TransferService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferService.h; sourceTree = "<group>"; };
 		D4677AD4189D122900F128CF /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		D4677AD9189D797300F128CF /* template-bg-personal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "template-bg-personal@2x.png"; sourceTree = "<group>"; };
+		D4677ADA189D797300F128CF /* template-bg-personal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "template-bg-personal.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -305,8 +305,8 @@
 				D4677A72189C7D4800F128CF /* receiving25.png */,
 				D4677A79189C822C00F128CF /* collection25@2x.png */,
 				D4677A7A189C822C00F128CF /* collection25.png */,
-				D4677A88189CA16E00F128CF /* template-bg-personal.png */,
-				D4677A89189CA16E00F128CF /* template-bg-personal@2x.png */,
+				D4677AD9189D797300F128CF /* template-bg-personal@2x.png */,
+				D4677ADA189D797300F128CF /* template-bg-personal.png */,
 				D4677A93189CB07B00F128CF /* template-bg-business@2x.png */,
 				D4677A94189CB07B00F128CF /* template-bg-business.png */,
 				D4677AAD189CC3CA00F128CF /* phone10@2x.png */,
@@ -426,19 +426,18 @@
 				D4677A78189C7E4E00F128CF /* my_card25.png in Resources */,
 				D4677A55189C7A0600F128CF /* Images.xcassets in Resources */,
 				D4677AC0189CCBDD00F128CF /* add20@2x.png in Resources */,
-				D4677A8B189CA16E00F128CF /* template-bg-personal@2x.png in Resources */,
 				D4677ABC189CC49A00F128CF /* address10.png in Resources */,
 				D4677AD2189CFAC800F128CF /* background-light15@2x.png in Resources */,
 				D4677A77189C7E4E00F128CF /* my_card25@2x.png in Resources */,
 				D4677AB7189CC41E00F128CF /* twitter10.png in Resources */,
 				D4677A7B189C822C00F128CF /* collection25@2x.png in Resources */,
-				D4677A8A189CA16E00F128CF /* template-bg-personal.png in Resources */,
 				D4677AAF189CC3CA00F128CF /* phone10@2x.png in Resources */,
 				D4677AB4189CC3F500F128CF /* email10.png in Resources */,
 				D4677A8D189CA29900F128CF /* Paul-G-Glass.JPG in Resources */,
 				D4677A95189CB07B00F128CF /* template-bg-business@2x.png in Resources */,
 				D4677A47189C7A0600F128CF /* InfoPlist.strings in Resources */,
 				D4677AB0189CC3CA00F128CF /* phone10.png in Resources */,
+				D4677ADC189D797300F128CF /* template-bg-personal.png in Resources */,
 				D4677A73189C7D4800F128CF /* receiving25@2x.png in Resources */,
 				D4677ABB189CC49A00F128CF /* address10@2x.png in Resources */,
 				D4677A92189CA47100F128CF /* wellnessclub.jpg in Resources */,
@@ -452,6 +451,7 @@
 				D4677AB3189CC3F500F128CF /* email10@2x.png in Resources */,
 				D4677A96189CB07B00F128CF /* template-bg-business.png in Resources */,
 				D4677ABF189CCBDD00F128CF /* add20.png in Resources */,
+				D4677ADB189D797300F128CF /* template-bg-personal@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
