@@ -8,13 +8,48 @@
 
 #import "MyCardsViewController.h"
 #import "UIImage+Resize.h"
+#import "AddCardViewController.h"
 #import <Parse/Parse.h>
 
 @interface MyCardsViewController ()
+{
+    NSString *categoryToPass;
+}
 
 @end
 
 @implementation MyCardsViewController
+
+- (IBAction)addCard:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose Card Category" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Personal", @"Business", nil];
+    [actionSheet showInView:self.view.superview];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        // Personal
+        categoryToPass = @"Personal";
+        [self performSegueWithIdentifier:@"addCard" sender:self];
+    } else if (buttonIndex == 1) {
+        // Business
+        categoryToPass = @"Business";
+        [self performSegueWithIdentifier:@"addCard" sender:self];
+    } else if (buttonIndex == 2) {
+        // Cancel
+        // Do nothing...
+        categoryToPass = nil;
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"addCard"]) {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        AddCardViewController *controller = (AddCardViewController *)navigationController.topViewController;
+        controller.cardCategory = categoryToPass;
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -66,38 +101,38 @@
     
     UILabel *categoryLabel = (UILabel *)[cell viewWithTag:2000];
     
-    UIImageView *backgroundImgView = (UIImageView *)[cell viewWithTag:1000];
-    backgroundImgView.layer.cornerRadius = 4.0f;
-    backgroundImgView.layer.masksToBounds = YES;
+    UIImageView *backgroundImageView = (UIImageView *)[cell viewWithTag:1000];
+    backgroundImageView.layer.cornerRadius = 4.0f;
+    backgroundImageView.layer.masksToBounds = YES;
     
-    UIImageView *profileImgView = (UIImageView *)[cell viewWithTag:1001];
+    UIImageView *profileImageView = (UIImageView *)[cell viewWithTag:1001];
     
     if (indexPath.section == 0) {
         // "templates" section
         if (indexPath.row == 0) {
             // template: personal (rounded image)
             
-            [backgroundImgView setImage:[UIImage imageNamed:@"template-bg-personal"]];
+            [backgroundImageView setImage:[UIImage imageNamed:@"template-bg-personal"]];
             
             categoryLabel.text = @"Personal";
             UIImage *resizedSquareImage = [[[UIImage imageNamed:@"Paul-G-Glass.JPG"] squareCroppedImage] resizedImageToWidth:132 andHeight:132];
-            [profileImgView setImage:resizedSquareImage];
+            [profileImageView setImage:resizedSquareImage];
             // Make the profile image rounded
-            profileImgView.layer.cornerRadius = 33.0f;
-            profileImgView.layer.masksToBounds = YES;
+            profileImageView.layer.cornerRadius = 33.0f;
+            profileImageView.layer.masksToBounds = YES;
         } else if (indexPath.row == 1) {
             // template: business (rounded corner rectangle)
             
-            [backgroundImgView setImage:[UIImage imageNamed:@"template-bg-business"]];
+            [backgroundImageView setImage:[UIImage imageNamed:@"template-bg-business"]];
             
             categoryLabel.text = @"Business";
             UIImage *resizedSquareImage = [[[UIImage imageNamed:@"wellnessclub.jpg"] squareCroppedImage] resizedImageToWidth:132 andHeight:132];
-            [profileImgView setImage:resizedSquareImage];
-            profileImgView.layer.cornerRadius = 4.0f;
-            profileImgView.layer.masksToBounds = YES;
+            [profileImageView setImage:resizedSquareImage];
+            profileImageView.layer.cornerRadius = 4.0f;
+            profileImageView.layer.masksToBounds = YES;
         }
     }
-    [self.view bringSubviewToFront:profileImgView];
+    [self.view bringSubviewToFront:profileImageView];
 
     
 /////////////
@@ -122,11 +157,11 @@
     
     // Create the PFFile object with the data of the image
     // Convert backgroundImg
-    NSData *backgroundImgViewData = UIImagePNGRepresentation(backgroundImgView.image);
+    NSData *backgroundImgViewData = UIImagePNGRepresentation(backgroundImageView.image);
     PFFile *backgroundImgViewFile = [PFFile fileWithName:@"backgroundImg" data:backgroundImgViewData];
     
     // Convert profileImg
-    NSData *profileImgViewData = UIImagePNGRepresentation(profileImgView.image);
+    NSData *profileImgViewData = UIImagePNGRepresentation(profileImageView.image);
     PFFile *profileImgViewFile = [PFFile fileWithName:@"profileImg" data:profileImgViewData];
     
     // Save the images (backgroundImgView, profileImgView) to Parse

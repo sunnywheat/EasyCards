@@ -44,5 +44,44 @@
     return image;
 }
 
+- (UIImage *)rectangleCroppedImageWith17To10
+{
+    // cropped around center! exactly what i want!
+    UIImage *image = self;
+    CGSize imageSize = image.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+
+    CGFloat newWidth = 0;
+    CGFloat newHeight = 0;
+    CGFloat widthOffset = 0;
+    CGFloat heightOffset = 0;
+    if (width > 1.7 * height) {
+        widthOffset = (width - 1.7 * height) / 2;
+        heightOffset = 0;
+        newWidth = 1.7 * height;
+        newHeight = height;
+    } else if (width < 1.7 * height) {
+        widthOffset = 0;
+        heightOffset = (height - width / 1.7) / 2;
+        newWidth = width;
+        newHeight = width / 1.7;
+    } else {
+        newWidth = width;
+        newHeight = height;
+    }
+    
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(newWidth, newHeight), NO, 0.);
+    [image drawAtPoint:CGPointMake(-widthOffset, -heightOffset)
+             blendMode:kCGBlendModeCopy
+                 alpha:1.];
+    image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+
+
 
 @end

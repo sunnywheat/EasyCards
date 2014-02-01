@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyCardsViewController : UITableViewController
+@interface MyCardsViewController : UITableViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *categoryLabel;
 
