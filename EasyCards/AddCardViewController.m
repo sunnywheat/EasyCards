@@ -118,9 +118,9 @@
     }];
     
     
-    
+    /*
     // Make sure to check this.
-    NSLog(@"We want to fetch data using this cardID %@",self.cardID);
+    NSLog(@"We want to fetch data using this cardID %@", self.cardID);
     
     // Here I just take a case as the example
     self.cardID = [NSString stringWithFormat:@"%@", @"PD2Lh6F4Nu"];
@@ -151,10 +151,9 @@
 //            [characters addObject:ichar];
 //        }
     
-
     
     }];
-    
+    */
     
     
 }
