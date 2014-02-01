@@ -103,21 +103,57 @@
 /////////////
 /// Parse
 /////////////
+    // The image has now been uploaded to Parse. Associate it with a new object
+    PFObject* newCard = [PFObject objectWithClassName:@"Card"];
+    
+    [newCard setObject:@"Jack" forKey:@"Name"];
+    
+    [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        
+        if (succeeded){
+            NSLog(@"Object Uploaded!");
+        }
+        else{
+            NSString *errorString = [[error userInfo] objectForKey:@"error"];
+            NSLog(@"Error: %@", errorString);
+        }
+        
+    }];
+    
     // Create the PFFile object with the data of the image
+    // Convert backgroundImg
     NSData *backgroundImgViewData = UIImagePNGRepresentation(backgroundImgView.image);
+    PFFile *backgroundImgViewFile = [PFFile fileWithName:@"backgroundImg" data:backgroundImgViewData];
     
-    PFFile *imageFile = [PFFile fileWithName:@"Image" data:backgroundImgViewData];
+    // Convert profileImg
+    NSData *profileImgViewData = UIImagePNGRepresentation(profileImgView.image);
+    PFFile *profileImgViewFile = [PFFile fileWithName:@"profileImg" data:profileImgViewData];
     
-    // Save the image to Parse
-    [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    // Save the images (backgroundImgView, profileImgView) to Parse
+    [backgroundImgViewFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
-            // The image has now been uploaded to Parse. Associate it with a new object
-            PFObject* newPhotoObject = [PFObject objectWithClassName:@"PhotoObject"];
-            [newPhotoObject setObject:imageFile forKey:@"card"];
-            
-            [newPhotoObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+
+            [newCard setObject:backgroundImgViewFile forKey:@"backgroundImgView"];
+
+            [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
-                    NSLog(@"Saved");
+                    NSLog(@" backgroundImg Saved");
+                }
+                else{
+                    // Error
+                    NSLog(@"Error: %@ %@", error, [error userInfo]);
+                }
+            }];
+        }
+    }];
+    [profileImgViewFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            
+            [newCard setObject:profileImgViewFile forKey:@"profileImgView"];
+            
+            [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    NSLog(@"profileImg Saved");
                 }
                 else{
                     // Error
@@ -127,8 +163,9 @@
         }
     }];
     
-    
 
+    
+    
     
     return cell;
 }
