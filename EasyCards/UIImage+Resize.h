@@ -12,5 +12,6 @@
 
 - (UIImage *)resizedImageToWidth:(float)width andHeight:(float)height;
 - (UIImage *)squareCroppedImage;
+- (UIImage *)rectangleCroppedImageWith17To10;
 
 @end

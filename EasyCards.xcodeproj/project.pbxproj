@@ -75,6 +75,12 @@
 		D4677ABC189CC49A00F128CF /* address10.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ABA189CC49A00F128CF /* address10.png */; };
 		D4677ABF189CCBDD00F128CF /* add20.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ABD189CCBDD00F128CF /* add20.png */; };
 		D4677AC0189CCBDD00F128CF /* add20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ABE189CCBDD00F128CF /* add20@2x.png */; };
+		D4677AC3189CDD3200F128CF /* AddCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4677AC2189CDD3200F128CF /* AddCardViewController.m */; };
+		D4677AC6189CE94D00F128CF /* BSKeyboardControls.m in Sources */ = {isa = PBXBuildFile; fileRef = D4677AC4189CE94D00F128CF /* BSKeyboardControls.m */; };
+		D4677ACD189CFA0500F128CF /* background-light30.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ACB189CFA0500F128CF /* background-light30.png */; };
+		D4677ACE189CFA0500F128CF /* background-light30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ACC189CFA0500F128CF /* background-light30@2x.png */; };
+		D4677AD1189CFAC800F128CF /* background-light15.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ACF189CFAC800F128CF /* background-light15.png */; };
+		D4677AD2189CFAC800F128CF /* background-light15@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677AD0189CFAC800F128CF /* background-light15@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +155,14 @@
 		D4677ABA189CC49A00F128CF /* address10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address10.png; sourceTree = "<group>"; };
 		D4677ABD189CCBDD00F128CF /* add20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add20.png; sourceTree = "<group>"; };
 		D4677ABE189CCBDD00F128CF /* add20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add20@2x.png"; sourceTree = "<group>"; };
+		D4677AC1189CDD3200F128CF /* AddCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCardViewController.h; sourceTree = "<group>"; };
+		D4677AC2189CDD3200F128CF /* AddCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCardViewController.m; sourceTree = "<group>"; };
+		D4677AC4189CE94D00F128CF /* BSKeyboardControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSKeyboardControls.m; sourceTree = "<group>"; };
+		D4677AC5189CE94D00F128CF /* BSKeyboardControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSKeyboardControls.h; sourceTree = "<group>"; };
+		D4677ACB189CFA0500F128CF /* background-light30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-light30.png"; sourceTree = "<group>"; };
+		D4677ACC189CFA0500F128CF /* background-light30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-light30@2x.png"; sourceTree = "<group>"; };
+		D4677ACF189CFAC800F128CF /* background-light15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-light15.png"; sourceTree = "<group>"; };
+		D4677AD0189CFAC800F128CF /* background-light15@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-light15@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +268,8 @@
 				D4677A4B189C7A0600F128CF /* AppDelegate.h */,
 				D4677A4C189C7A0600F128CF /* AppDelegate.m */,
 				D4677A4E189C7A0600F128CF /* Main.storyboard */,
+				D4677AC1189CDD3200F128CF /* AddCardViewController.h */,
+				D4677AC2189CDD3200F128CF /* AddCardViewController.m */,
 				D4677A80189C879300F128CF /* CollectionViewController.h */,
 				D4677A81189C879300F128CF /* CollectionViewController.m */,
 				D4677A83189C883400F128CF /* ReceivingViewController.h */,
@@ -262,6 +278,8 @@
 				D4677A7E189C877100F128CF /* MyCardsViewController.m */,
 				D4677A8E189CA30200F128CF /* UIImage+Resize.h */,
 				D4677A8F189CA30200F128CF /* UIImage+Resize.m */,
+				D4677AC4189CE94D00F128CF /* BSKeyboardControls.m */,
+				D4677AC5189CE94D00F128CF /* BSKeyboardControls.h */,
 				D4677A54189C7A0600F128CF /* Images.xcassets */,
 				D4677A43189C7A0600F128CF /* Supporting Files */,
 			);
@@ -271,6 +289,10 @@
 		D4677A43189C7A0600F128CF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D4677ACF189CFAC800F128CF /* background-light15.png */,
+				D4677AD0189CFAC800F128CF /* background-light15@2x.png */,
+				D4677ACB189CFA0500F128CF /* background-light30.png */,
+				D4677ACC189CFA0500F128CF /* background-light30@2x.png */,
 				D4677A75189C7E4E00F128CF /* my_card25@2x.png */,
 				D4677A76189C7E4E00F128CF /* my_card25.png */,
 				D4677A71189C7D4800F128CF /* receiving25@2x.png */,
@@ -400,6 +422,7 @@
 				D4677AC0189CCBDD00F128CF /* add20@2x.png in Resources */,
 				D4677A8B189CA16E00F128CF /* template-bg-personal@2x.png in Resources */,
 				D4677ABC189CC49A00F128CF /* address10.png in Resources */,
+				D4677AD2189CFAC800F128CF /* background-light15@2x.png in Resources */,
 				D4677A77189C7E4E00F128CF /* my_card25@2x.png in Resources */,
 				D4677AB7189CC41E00F128CF /* twitter10.png in Resources */,
 				D4677A7B189C822C00F128CF /* collection25@2x.png in Resources */,
@@ -416,7 +439,10 @@
 				D4677A7C189C822C00F128CF /* collection25.png in Resources */,
 				D4677A50189C7A0600F128CF /* Main.storyboard in Resources */,
 				D4677AB8189CC41E00F128CF /* twitter10@2x.png in Resources */,
+				D4677ACD189CFA0500F128CF /* background-light30.png in Resources */,
 				D4677A74189C7D4800F128CF /* receiving25.png in Resources */,
+				D4677ACE189CFA0500F128CF /* background-light30@2x.png in Resources */,
+				D4677AD1189CFAC800F128CF /* background-light15.png in Resources */,
 				D4677AB3189CC3F500F128CF /* email10@2x.png in Resources */,
 				D4677A96189CB07B00F128CF /* template-bg-business.png in Resources */,
 				D4677ABF189CCBDD00F128CF /* add20.png in Resources */,
@@ -439,6 +465,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4677A7F189C877100F128CF /* MyCardsViewController.m in Sources */,
+				D4677AC6189CE94D00F128CF /* BSKeyboardControls.m in Sources */,
+				D4677AC3189CDD3200F128CF /* AddCardViewController.m in Sources */,
 				D4677A85189C883400F128CF /* ReceivingViewController.m in Sources */,
 				D4677A4D189C7A0600F128CF /* AppDelegate.m in Sources */,
 				D4677A82189C879300F128CF /* CollectionViewController.m in Sources */,
