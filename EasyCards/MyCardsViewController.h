@@ -26,5 +26,6 @@
 @property (nonatomic, strong) NSMutableArray *allEmails;
 @property (nonatomic, strong) NSMutableArray *allAddressLineOnes;
 @property (nonatomic, strong) NSMutableArray *allAddressLineTwos;
+@property (nonatomic, strong) NSMutableArray *allCreateDates;
 
 @end

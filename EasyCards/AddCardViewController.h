@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BSKeyboardControls.h"
-#import "MBProgressHUD.h"
 
-@interface AddCardViewController : UIViewController <BSKeyboardControlsDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, MBProgressHUDDelegate>
+@interface AddCardViewController : UIViewController <BSKeyboardControlsDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, strong) BSKeyboardControls *keyboardControls;
 

@@ -90,6 +90,7 @@
     self.allEmails = nil;
     self.allAddressLineOnes = nil;
     self.allAddressLineTwos = nil;
+    self.allCreateDates = nil;
     
     self.allProfileImages = [[NSMutableArray alloc] init];
     self.allBackgroundImages = [[NSMutableArray alloc] init];
@@ -100,6 +101,7 @@
     self.allEmails = [[NSMutableArray alloc] init];
     self.allAddressLineOnes = [[NSMutableArray alloc] init];
     self.allAddressLineTwos = [[NSMutableArray alloc] init];
+    self.allCreateDates = [[NSMutableArray alloc] init];
     
     self.allCardIDs = [[NSUserDefaults standardUserDefaults] objectForKey:@"AllCardIDs"];
     
@@ -121,6 +123,12 @@
                 [self.allEmails addObject:cardDataArr[4]];
                 [self.allAddressLineOnes addObject:cardDataArr[5]];
                 [self.allAddressLineTwos addObject:cardDataArr[6]];
+                
+                NSDate *createDate = card.createdAt;
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+                NSString *createDateStr = [dateFormatter stringFromDate:createDate];
+                [self.allCreateDates addObject:[NSString stringWithFormat:@"Created: %@", createDateStr]];
                 
                 PFFile *profileImgViewFile = [card objectForKey:@"profileImg"];
                 [profileImgViewFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
@@ -237,7 +245,7 @@
                 emailLabel.text = self.allEmails[indexPath.row];
                 addressLineOneLabel.text = self.allAddressLineOnes[indexPath.row];
                 addressLineTwoLabel.text = self.allAddressLineTwos[indexPath.row];
-                categoryLabel.text = @"";
+                categoryLabel.text = self.allCreateDates[indexPath.row];
                 
                 
             } else if (indexPath.section == 1) {

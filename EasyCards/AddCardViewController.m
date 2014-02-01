@@ -36,14 +36,6 @@
     
     [self saveNewCard];
     
-    // Add MBProgressHUD as indicator!
-    MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    
-    HUD.delegate = self;
-    HUD.labelText = @"Saving...";
-    
-    [HUD show:YES];
-    [HUD hide:YES afterDelay:5];
     [self performSelector:@selector(closeScreen) withObject:self afterDelay:3];
 }
 
