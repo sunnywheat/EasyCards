@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BSKeyboardControls.h"
+#import "MBProgressHUD.h"
 
-@interface AddCardViewController : UIViewController <BSKeyboardControlsDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
+@interface AddCardViewController : UIViewController <BSKeyboardControlsDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, MBProgressHUDDelegate>
 
 @property (nonatomic, strong) BSKeyboardControls *keyboardControls;
 
@@ -29,29 +30,16 @@
 @property (strong, nonatomic) IBOutlet UITextField *addressLineOneTextField;
 @property (strong, nonatomic) IBOutlet UITextField *addressLineTwoTextField;
 
-// Receive data
-@property (nonatomic, strong) NSString *nameRecieved;
-@property (nonatomic, strong) NSString *descriptionRecieved;
-@property (nonatomic, strong) NSString *phoneRecieved;
-@property (nonatomic, strong) NSString *twitterRecieved;
-@property (nonatomic, strong) NSString *emailRecieved;
-@property (nonatomic, strong) NSString *addressLineOneRecieved;
-@property (nonatomic, strong) NSString *addressLineTwoRecieved;
-
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveButton;
-
 
 @property (nonatomic, strong) NSString *cardCategory;
 
-// Please no NSString anymore during hackathon
+// Please no NSString anymore during hackathon (really? hehe...)
 // cardID is for bluetooth trasmittion
 @property (nonatomic,assign) NSMutableString *cardID;
-// Save cardID string value to NSUserDefaults
-@property (nonatomic,assign) NSMutableString *currentSumCardID;
-
-// cardDataString would be used for several time to store Name, Phone, Email and so on
-// String is sent to Parse
-@property (nonatomic,assign) NSMutableString *cardDataString;
+// cardDataStr would be used for several time to store Name, Phone, Email and so on (sent to Parse!)
+@property (nonatomic,assign) NSMutableString *cardDataStr;
+@property (nonatomic, strong) NSMutableArray *allCardIDs;
 
 
 @end

@@ -22,60 +22,56 @@
     NSString *replacementInfo;
 }
 
-- (IBAction)cancel:(id)sender {
-    //[self.navigationController popViewControllerAnimated:YES];
+- (void)closeScreen
+{
+    NSLog(@"screen is being closed...");
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)cancel:(id)sender {
+    [self closeScreen];
+}
+
 - (IBAction)save:(id)sender {
+    
+    [self saveNewCard];
+    
+    // Add MBProgressHUD as indicator!
+    MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    
+    HUD.delegate = self;
+    HUD.labelText = @"Saving...";
+    
+    [HUD show:YES];
+    [HUD hide:YES afterDelay:5];
+    [self performSelector:@selector(closeScreen) withObject:self afterDelay:3];
+}
+
+- (void)saveNewCard
+{
     // Save the newly created card info to both local and Parse
     
-    // Start from !
-    // Totally 9 strings
-    self.cardDataString = [NSMutableString stringWithFormat:@"%@",  self.nameTextField.text];
-    [self.cardDataString appendString: @"#&"];
-    [self.cardDataString appendString: self.descriptionTextField.text];
-    [self.cardDataString appendString: @"#&"];
-    [self.cardDataString appendString: self.phoneTextField.text];
-    [self.cardDataString appendString: @"#&"];
-    [self.cardDataString appendString: self.twitterTextField.text];
-    [self.cardDataString appendString: @"#&"];
-    [self.cardDataString appendString: self.emailTextField.text];
-    [self.cardDataString appendString: @"#&"];
-    [self.cardDataString appendString: self.addressLineOneTextField.text];
-    [self.cardDataString appendString: @"#&"];
-    [self.cardDataString appendString: self.addressLineTwoTextField.text];
-    
-    NSLog(@"Card Information Data: %@",self.cardDataString);
-
+    self.cardDataStr = (NSMutableString *)[@[self.nameTextField.text, self.descriptionTextField.text, self.phoneTextField.text, self.twitterTextField.text, self.emailTextField.text, self.addressLineOneTextField.text, self.addressLineTwoTextField.text] componentsJoinedByString:@"#&"];
     
     /////////////
     /// Parse
     /////////////
-    // The image has now been uploaded to Parse. Associate it with a new object
+    // The image has now been uploaded to Parse. Associate it with a new object.
     PFObject* newCard = [PFObject objectWithClassName:@"Card"];
     
-    [newCard setObject:self.cardDataString forKey:@"cardDataString"];
+    [newCard setObject:self.cardDataStr forKey:@"cardDataStr"];
     
     [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         
         if (succeeded){
-            NSLog(@"Object Uploaded!");
             self.cardID = [NSMutableString stringWithFormat:@"%@", [newCard objectId]];
-            NSLog(@"Object id %@",self.cardID);
-            // cardID is generated here
-            // Retrieve Data, putting to previousSumCardID
-            NSString *previousSumCardID =[[NSUserDefaults standardUserDefaults] stringForKey:@"Key"];
-            self.currentSumCardID = [NSMutableString stringWithFormat:@"%@",  previousSumCardID];
-            // Insert #* into two cardIDs
-            [self.currentSumCardID appendString: @" "];
-            [self.currentSumCardID appendString: self.cardID];
             
-            // Save currentSumCardID into Key, NSUserDefaults
-            [[NSUserDefaults standardUserDefaults] setObject:self.currentSumCardID forKey:@"Key"];
-            NSLog(@"%@",self.currentSumCardID);
-            self.cardID = nil;
-            
+            self.allCardIDs = [[[NSUserDefaults standardUserDefaults] objectForKey:@"AllCardIDs"] mutableCopy];
+            if (self.allCardIDs == nil) {
+                self.allCardIDs = [[NSMutableArray alloc] init];
+            }
+            [self.allCardIDs insertObject:self.cardID atIndex:0];
+            [[NSUserDefaults standardUserDefaults] setObject:self.allCardIDs forKey:@"AllCardIDs"];
         }
         else{
             NSString *errorString = [[error userInfo] objectForKey:@"error"];
@@ -86,23 +82,24 @@
     
     // Create the PFFile object with the data of the image
     // Convert backgroundImg
-    NSData *backgroundImgViewData = UIImagePNGRepresentation(self.backgroundImageView.image);
-    PFFile *backgroundImgViewFile = [PFFile fileWithName:@"backgroundImg" data:backgroundImgViewData];
+    NSData *backgroundImgData = UIImagePNGRepresentation(self.backgroundImageView.image);
+    PFFile *backgroundImgFile = [PFFile fileWithName:@"backgroundImg" data:backgroundImgData];
     
     // Convert profileImg
-    NSData *profileImgViewData = UIImagePNGRepresentation(self.profileImageView.image);
-    PFFile *profileImgViewFile = [PFFile fileWithName:@"profileImg" data:profileImgViewData];
+    NSData *profileImgData = UIImagePNGRepresentation(self.profileImageView.image);
+    PFFile *profileImgFile = [PFFile fileWithName:@"profileImg" data:profileImgData];
     
-    // Save the images (backgroundImgView, profileImgView) to Parse
-    // Save backgroundImgViewFile
-    [backgroundImgViewFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    // Save the images (backgroundImg, profileImg) to Parse
+    
+    // Save backgroundImgFile
+    [backgroundImgFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             
-            [newCard setObject:backgroundImgViewFile forKey:@"backgroundImgView"];
+            [newCard setObject:backgroundImgFile forKey:@"backgroundImg"];
             
             [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
-                    NSLog(@" backgroundImg Saved");
+                    NSLog(@"backgroundImg Saved");
                 }
                 else{
                     // Error
@@ -111,11 +108,12 @@
             }];
         }
     }];
-    // Save profileImgViewFile
-    [profileImgViewFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    
+    // Save profileImgFile
+    [profileImgFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             
-            [newCard setObject:profileImgViewFile forKey:@"profileImgView"];
+            [newCard setObject:profileImgFile forKey:@"profileImg"];
             
             [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
@@ -128,53 +126,6 @@
             }];
         }
     }];
-    
-    
-    
-    // Make sure to check this.
-    NSLog(@"We want to fetch data using this cardID %@", self.cardID);
-    
-    // Here I just take a case as the example
-    self.cardID = [NSMutableString stringWithFormat:@"%@", @"kPzcNx68hH"];
-    
-    
-    PFQuery *query = [PFQuery queryWithClassName:@"Card"];
-    [query getObjectInBackgroundWithId:self.cardID block:^(PFObject *recievedCard, NSError *error) {
-        // Do something with the returned PFObject in the recievedCard variable.
-        NSString *recievedData = recievedCard[@"cardDataString"];
-        //NSLog(@"%@", recievedData);
-        NSArray *recievedDataArray = [recievedData componentsSeparatedByString:@"#&"];
-        //NSLog(@"%@", recievedDataArray);
-        self.nameRecieved = [recievedDataArray objectAtIndex:0];
-        self.descriptionRecieved = [recievedDataArray objectAtIndex:1];
-        self.phoneRecieved = [recievedDataArray objectAtIndex:2];
-        self.twitterRecieved = [recievedDataArray objectAtIndex:3];
-        self.emailRecieved = [recievedDataArray objectAtIndex:4];
-        self.addressLineOneRecieved = [recievedDataArray objectAtIndex:5];
-        self.addressLineTwoRecieved = [recievedDataArray objectAtIndex:6];
-        
-        // NSLog(@"%@", self.addressLineOneRecieved);
-        
-<<<<<<< HEAD
-        NSLog(@"%@", recievedData);
-        // NSString *objectId = [recievedCard cardDataString];
-        // NSLog(@"Finally we query this objectId: %@", objectId);
-    
-        // Decode the cardDataString
-        // Separate a string into its individual characters
-//        NSMutableArray *characters = [[NSMutableArray alloc] initWithCapacity:[recievedCard.cardDataString length]];
-//        for (int i=0; i < [myString length]; i++) {
-//            NSString *ichar  = [NSString stringWithFormat:@"%c", [myString characterAtIndex:i]];
-//            [characters addObject:ichar];
-//        }
-    
-    
-=======
->>>>>>> f2017ef3e15d27aa0dcef0ce4b22bba3de3e0cd6
-    }];
-    
-    
-    
 }
 
 - (IBAction)replaceProfileImage:(id)sender {
@@ -184,7 +135,7 @@
 }
 
 - (IBAction)replaceBackgroundImage:(id)sender {
-    replacementInfo = @"Replace Background";
+    replacementInfo = @"Replace Background Photo";
     [self initImagePicker];
     replacementType = @"BackgroundImage";
 }
@@ -245,12 +196,6 @@
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.delegate = self;
     imagePicker.allowsEditing = NO;
-    
-    // following codes - unnecessary~
-    //set the imagePicker to be like its native...  :)
-    //get rid of the unnecessary strange incompatibility issue happening to buttons...
-    //[[UIButton appearanceWhenContainedIn:[UIImagePickerController class], nil] setBackgroundImage:nil forState:UIControlStateNormal];
-    //[[UINavigationBar appearanceWhenContainedIn:[UIImagePickerController class], nil] setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     
     [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
 }

@@ -16,6 +16,7 @@
 @interface MyCardsViewController () <CBPeripheralManagerDelegate>
 {
     NSString *categoryToPass;
+    BOOL startLoading;
 }
 
 @property (strong, nonatomic) CBPeripheralManager       *peripheralManager;
@@ -76,22 +77,116 @@
     // [self.peripheralManager stopAdvertising];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.allProfileImages = nil;
+    self.allBackgroundImages = nil;
+    self.allNames = nil;
+    self.allDescriptions = nil;
+    self.allPhones = nil;
+    self.allTwitters = nil;
+    self.allEmails = nil;
+    self.allAddressLineOnes = nil;
+    self.allAddressLineTwos = nil;
+    
+    self.allProfileImages = [[NSMutableArray alloc] init];
+    self.allBackgroundImages = [[NSMutableArray alloc] init];
+    self.allNames = [[NSMutableArray alloc] init];
+    self.allDescriptions = [[NSMutableArray alloc] init];
+    self.allPhones = [[NSMutableArray alloc] init];
+    self.allTwitters = [[NSMutableArray alloc] init];
+    self.allEmails = [[NSMutableArray alloc] init];
+    self.allAddressLineOnes = [[NSMutableArray alloc] init];
+    self.allAddressLineTwos = [[NSMutableArray alloc] init];
+    
+    self.allCardIDs = [[NSUserDefaults standardUserDefaults] objectForKey:@"AllCardIDs"];
+    
+    if ([self hasDesignedCards]) {
+        for (NSString *queryObjectId in self.allCardIDs) {
+            
+            NSLog(@"query object id: %@", queryObjectId);
+            
+            PFQuery *query = [PFQuery queryWithClassName:@"Card"];
+            [query getObjectInBackgroundWithId:queryObjectId block:^(PFObject *card, NSError *error) {
+                
+                NSString *cardDataStr = [card objectForKey:@"cardDataStr"];
+                NSArray *cardDataArr = [cardDataStr componentsSeparatedByString:@"#&"];
+                
+                [self.allNames addObject:cardDataArr[0]];
+                [self.allDescriptions addObject:cardDataArr[1]];
+                [self.allPhones addObject:cardDataArr[2]];
+                [self.allTwitters addObject:cardDataArr[3]];
+                [self.allEmails addObject:cardDataArr[4]];
+                [self.allAddressLineOnes addObject:cardDataArr[5]];
+                [self.allAddressLineTwos addObject:cardDataArr[6]];
+                
+                PFFile *profileImgViewFile = [card objectForKey:@"profileImg"];
+                [profileImgViewFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                    if (!error) {
+                        UIImage *profileImage = [UIImage imageWithData:data];
+                        [self.allProfileImages addObject:profileImage];
+                    }
+                }];
+                
+                PFFile *backgroundImgFile = [card objectForKey:@"backgroundImg"];
+                [backgroundImgFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                    if (!error) {
+                        UIImage *backgroundImage = [UIImage imageWithData:data];
+                        [self.allBackgroundImages addObject:backgroundImage];
+                        
+                        if ([queryObjectId isEqualToString:[self.allCardIDs lastObject]]) {
+                            NSLog(@"Loading last card now...");
+                            startLoading = YES;
+                            [self.tableView reloadData];
+                        }
+                        
+                    }
+                }];
+                
+            }];
+        }
+    }
+}
+
+#pragma mark - helper method
+- (BOOL)hasDesignedCards
+{
+    return (self.allCardIDs != nil) && ([self.allCardIDs count] > 0);
+}
+
 #pragma mark - Table view data source
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    if ([self hasDesignedCards] && startLoading) {
+        if (section == 0) {
+            return @"Designed Cards";
+        } else if (section == 1) {
+            return @"Templates";
+        }
+    }
     return @"Templates";
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
+    if ([self hasDesignedCards] && startLoading) {
+        return 2;
+    }
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
+    if ([self hasDesignedCards] && startLoading) {
+        if (section == 0) {
+            return [self.allCardIDs count];
+        } else if (section == 1) {
+            return 2;
+        }
+    }
     return 2;
 }
 
@@ -110,173 +205,132 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
-    
-    UILabel *categoryLabel = (UILabel *)[cell viewWithTag:2000];
-    
     UIImageView *backgroundImageView = (UIImageView *)[cell viewWithTag:1000];
     backgroundImageView.layer.cornerRadius = 4.0f;
     backgroundImageView.layer.masksToBounds = YES;
-    
     UIImageView *profileImageView = (UIImageView *)[cell viewWithTag:1001];
     
-    if (indexPath.section == 0) {
-        // "templates" section
+    UILabel *categoryLabel = (UILabel *)[cell viewWithTag:2000];
+    
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:2001];
+    UILabel *descriptionLabel = (UILabel *)[cell viewWithTag:2002];
+    UILabel *phoneLabel = (UILabel *)[cell viewWithTag:2003];
+    UILabel *twitterLabel = (UILabel *)[cell viewWithTag:2004];
+    UILabel *emailLabel = (UILabel *)[cell viewWithTag:2005];
+    UILabel *addressLineOneLabel = (UILabel *)[cell viewWithTag:2006];
+    UILabel *addressLineTwoLabel = (UILabel *)[cell viewWithTag:2007];
+    
+    if ([self hasDesignedCards]) {
+        if (startLoading) {
+            if (indexPath.section == 0) {
+                // Designed Cards
+                
+                
+                NSLog(@"%d", [self.allBackgroundImages count]);
+                
+                [backgroundImageView setImage:self.allBackgroundImages[indexPath.row]];
+                [profileImageView setImage:self.allProfileImages[indexPath.row]];
+                nameLabel.text = self.allNames[indexPath.row];
+                descriptionLabel.text = self.allDescriptions[indexPath.row];
+                phoneLabel.text = self.allPhones[indexPath.row];
+                twitterLabel.text = self.allTwitters[indexPath.row];
+                emailLabel.text = self.allEmails[indexPath.row];
+                addressLineOneLabel.text = self.allAddressLineOnes[indexPath.row];
+                addressLineTwoLabel.text = self.allAddressLineTwos[indexPath.row];
+                categoryLabel.text = @"";
+                
+                
+            } else if (indexPath.section == 1) {
+                // Templates
+                if (indexPath.row == 0) {
+                    // template: personal (rounded image)
+                    
+                    [backgroundImageView setImage:[UIImage imageNamed:@"template-bg-personal"]];
+                    
+                    UIImage *resizedSquareImage = [[[UIImage imageNamed:@"Paul-G-Glass.JPG"] squareCroppedImage] resizedImageToWidth:132 andHeight:132];
+                    [profileImageView setImage:resizedSquareImage];
+                    // Make the profile image rounded
+                    profileImageView.layer.cornerRadius = 33.0f;
+                    profileImageView.layer.masksToBounds = YES;
+                    
+                    categoryLabel.text = @"Personal";
+                    
+                    nameLabel.text = @"Paul Wong";
+                    descriptionLabel.text = @"Avid iOS Developer";
+                    phoneLabel.text = @"412-482-7996";
+                    twitterLabel.text = @"@paulwong90";
+                    emailLabel.text = @"paulloveshk@gmail.com";
+                    addressLineOneLabel.text = @"5874 Shady Forbes Terrace";
+                    addressLineTwoLabel.text = @"Pittsburgh, PA 15217";
+                    
+                } else if (indexPath.row == 1) {
+                    // template: business (rounded corner rectangle)
+                    
+                    [backgroundImageView setImage:[UIImage imageNamed:@"template-bg-business"]];
+                    
+                    UIImage *resizedSquareImage = [[[UIImage imageNamed:@"wellnessclub.jpg"] squareCroppedImage] resizedImageToWidth:132 andHeight:132];
+                    [profileImageView setImage:resizedSquareImage];
+                    profileImageView.layer.cornerRadius = 4.0f;
+                    profileImageView.layer.masksToBounds = YES;
+                    
+                    categoryLabel.text = @"Business";
+                    
+                    nameLabel.text = @"Wellness Club";
+                    descriptionLabel.text = @"Bodywork Shop";
+                    phoneLabel.text = @"857-204-5878";
+                    twitterLabel.text = @"@wellnessclub";
+                    emailLabel.text = @"qingmango@gmail.com";
+                    addressLineOneLabel.text = @"278 Centre St";
+                    addressLineTwoLabel.text = @"Quincy, MA 02169";
+                    
+                }
+            }
+        }
+    } else {
+        // Only templates are involved!
         if (indexPath.row == 0) {
             // template: personal (rounded image)
             
             [backgroundImageView setImage:[UIImage imageNamed:@"template-bg-personal"]];
             
-            categoryLabel.text = @"Personal";
             UIImage *resizedSquareImage = [[[UIImage imageNamed:@"Paul-G-Glass.JPG"] squareCroppedImage] resizedImageToWidth:132 andHeight:132];
             [profileImageView setImage:resizedSquareImage];
             // Make the profile image rounded
             profileImageView.layer.cornerRadius = 33.0f;
             profileImageView.layer.masksToBounds = YES;
+            
+            categoryLabel.text = @"Personal";
+            
+            nameLabel.text = @"Paul Wong";
+            descriptionLabel.text = @"Avid iOS Developer";
+            phoneLabel.text = @"412-482-7996";
+            twitterLabel.text = @"@paulwong90";
+            emailLabel.text = @"paulloveshk@gmail.com";
+            addressLineOneLabel.text = @"5874 Shady Forbes Terrace";
+            addressLineTwoLabel.text = @"Pittsburgh, PA 15217";
+            
         } else if (indexPath.row == 1) {
             // template: business (rounded corner rectangle)
             
             [backgroundImageView setImage:[UIImage imageNamed:@"template-bg-business"]];
             
-            categoryLabel.text = @"Business";
             UIImage *resizedSquareImage = [[[UIImage imageNamed:@"wellnessclub.jpg"] squareCroppedImage] resizedImageToWidth:132 andHeight:132];
             [profileImageView setImage:resizedSquareImage];
             profileImageView.layer.cornerRadius = 4.0f;
             profileImageView.layer.masksToBounds = YES;
-        }
-    }
-    [self.view bringSubviewToFront:profileImageView];
-
-    
-
-    
-    // cardDataString need to store label information
-    self.cardDataString = [NSString stringWithFormat:@"%@",  @"Anvil"];
-    
-    // The index for the selected card.
-    int selectedCard = 3;
-//    // Create the PFFile object with the data of the image
-//    // Convert backgroundImg
-//    NSData *backgroundImgViewData = UIImagePNGRepresentation(backgroundImageView.image);
-//    PFFile *backgroundImgViewFile = [PFFile fileWithName:@"backgroundImg" data:backgroundImgViewData];
-//    
-//    // Convert profileImg
-//    NSData *profileImgViewData = UIImagePNGRepresentation(profileImageView.image);
-//    PFFile *profileImgViewFile = [PFFile fileWithName:@"profileImg" data:profileImgViewData];
-    
-    if (indexPath.section == 0) {
-        // "templates" section
-        if (indexPath.row == selectedCard) {
-            /////////////
-            /// Parse
-            /////////////
-            // The image has now been uploaded to Parse. Associate it with a new object
-            PFObject* newCard = [PFObject objectWithClassName:@"Card"];
             
-            [newCard setObject:self.cardDataString forKey:@"cardDataString"];
+            categoryLabel.text = @"Business";
             
-            [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                
-                if (succeeded){
-                    NSLog(@"Object Uploaded!");
-                    self.cardID = [NSString stringWithFormat:@"%@", [newCard objectId]];
-                    NSLog(@"Object id %@",self.cardID);
-                }
-                else{
-                    NSString *errorString = [[error userInfo] objectForKey:@"error"];
-                    NSLog(@"Error: %@", errorString);
-                }
-                
-            }];
-            
-            // Create the PFFile object with the data of the image
-            // Convert backgroundImg
-            NSData *backgroundImgViewData = UIImagePNGRepresentation(backgroundImageView.image);
-            PFFile *backgroundImgViewFile = [PFFile fileWithName:@"backgroundImg" data:backgroundImgViewData];
-            
-            // Convert profileImg
-            NSData *profileImgViewData = UIImagePNGRepresentation(profileImageView.image);
-            PFFile *profileImgViewFile = [PFFile fileWithName:@"profileImg" data:profileImgViewData];
-            
-            // Save the images (backgroundImgView, profileImgView) to Parse
-            // Save backgroundImgViewFile
-            [backgroundImgViewFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error) {
-                    
-                    [newCard setObject:backgroundImgViewFile forKey:@"backgroundImgView"];
-                    
-                    [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        if (!error) {
-                            NSLog(@" backgroundImg Saved");
-                        }
-                        else{
-                            // Error
-                            NSLog(@"Error: %@ %@", error, [error userInfo]);
-                        }
-                    }];
-                }
-            }];
-            // Save profileImgViewFile
-            [profileImgViewFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error) {
-                    
-                    [newCard setObject:profileImgViewFile forKey:@"profileImgView"];
-                    
-                    [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        if (!error) {
-                            NSLog(@"profileImg Saved");
-                        }
-                        else{
-                            // Error
-                            NSLog(@"Error: %@ %@", error, [error userInfo]);
-                        }
-                    }];
-                }
-            }];
-
-            
-            
-            // Make sure to check this.
-            NSLog(@"We want to fetch data using this cardID %@",self.cardID);
-            
-            self.cardID = [NSString stringWithFormat:@"%@", @"UovN26xqat"];
-            
-            PFQuery *query = [PFQuery queryWithClassName:@"Card"];
-            [query getObjectInBackgroundWithId:self.cardID block:^(PFObject *recievedCard, NSError *error) {
-                // Do something with the returned PFObject in the gameScore variable.
-                // NSLog(@"%@", recievedCard);
-                NSString *objectId = recievedCard.objectId;
-                NSLog(@"Finally we query this objectId: %@", objectId);
-                
-                
-                PFFile *backgroundImgViewLoad = [recievedCard objectForKey:@"backgroundImgView"];
-                [backgroundImgViewLoad getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                    if (!error) {
-                        UIImage *image = [UIImage imageWithData:data];
-                    }
-                }];
-                
-                PFFile *profileImgViewLoad = [recievedCard objectForKey:@"profileImgView"];
-                [profileImgViewLoad getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                    if (!error) {
-                        UIImage *image = [UIImage imageWithData:data];
-                    }
-                }];
-                
-                
-                
-            }];
-            
-            
-   
+            nameLabel.text = @"Wellness Club";
+            descriptionLabel.text = @"Bodywork Shop";
+            phoneLabel.text = @"857-204-5878";
+            twitterLabel.text = @"@wellnessclub";
+            emailLabel.text = @"qingmango@gmail.com";
+            addressLineOneLabel.text = @"278 Centre St";
+            addressLineTwoLabel.text = @"Quincy, MA 02169";
             
         }
     }
-    
-    
-
-    
-
     
     
     
@@ -351,11 +405,7 @@
     [super viewWillDisappear:animated];
 }
 
-
-
 #pragma mark - Peripheral Methods
-
-
 
 /** Required protocol method.  A full app should take care of all the possible states,
  *  but we're just waiting for  to know when the CBPeripheralManager is ready
