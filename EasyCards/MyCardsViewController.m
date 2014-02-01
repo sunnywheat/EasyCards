@@ -8,6 +8,7 @@
 
 #import "MyCardsViewController.h"
 #import "UIImage+Resize.h"
+#import <Parse/Parse.h>
 
 @interface MyCardsViewController ()
 
@@ -97,6 +98,37 @@
         }
     }
     [self.view bringSubviewToFront:profileImgView];
+
+    
+/////////////
+/// Parse
+/////////////
+    // Create the PFFile object with the data of the image
+    NSData *backgroundImgViewData = UIImagePNGRepresentation(backgroundImgView.image);
+    
+    PFFile *imageFile = [PFFile fileWithName:@"Image" data:backgroundImgViewData];
+    
+    // Save the image to Parse
+    [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            // The image has now been uploaded to Parse. Associate it with a new object
+            PFObject* newPhotoObject = [PFObject objectWithClassName:@"PhotoObject"];
+            [newPhotoObject setObject:imageFile forKey:@"card"];
+            
+            [newPhotoObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    NSLog(@"Saved");
+                }
+                else{
+                    // Error
+                    NSLog(@"Error: %@ %@", error, [error userInfo]);
+                }
+            }];
+        }
+    }];
+    
+    
+
     
     return cell;
 }

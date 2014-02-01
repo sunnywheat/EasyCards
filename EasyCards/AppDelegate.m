@@ -18,10 +18,7 @@
     
     // Register our parse app with the service
     [Parse setApplicationId:@"EPSrSd6JZkbihviEVLaMLv6xYh5qzyb9c1VCF3S9"
-                  clientKey:@"C1YWMbU6HQxQmkeLlsL25nQpoqzXrxXM9VUKfKrh"];
-
-    
-    
+                  clientKey:@"C1YWMbU6HQxQmkeLlsL25nQpoqzXrxXM9VUKfKrh"];  
     
     // Create Some Sample Objects for the Parse test.
     
