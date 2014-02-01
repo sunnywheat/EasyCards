@@ -134,7 +134,9 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <navigationItem key="navigationItem" title="My Cards" id="stJ-zG-k01"/>
+                    <navigationItem key="navigationItem" title="My Cards" id="stJ-zG-k01">
+                        <barButtonItem key="rightBarButtonItem" image="add20.png" id="jzg-pC-5cu"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YSC-Lb-bev" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -234,6 +236,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add20.png" width="20" height="20"/>
         <image name="address10.png" width="10" height="10"/>
         <image name="collection25.png" width="25" height="25"/>
         <image name="email10.png" width="10" height="10"/>

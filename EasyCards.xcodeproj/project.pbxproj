@@ -73,6 +73,8 @@
 		D4677AB8189CC41E00F128CF /* twitter10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677AB6189CC41E00F128CF /* twitter10@2x.png */; };
 		D4677ABB189CC49A00F128CF /* address10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677AB9189CC49A00F128CF /* address10@2x.png */; };
 		D4677ABC189CC49A00F128CF /* address10.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ABA189CC49A00F128CF /* address10.png */; };
+		D4677ABF189CCBDD00F128CF /* add20.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ABD189CCBDD00F128CF /* add20.png */; };
+		D4677AC0189CCBDD00F128CF /* add20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ABE189CCBDD00F128CF /* add20@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +147,8 @@
 		D4677AB6189CC41E00F128CF /* twitter10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter10@2x.png"; sourceTree = "<group>"; };
 		D4677AB9189CC49A00F128CF /* address10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "address10@2x.png"; sourceTree = "<group>"; };
 		D4677ABA189CC49A00F128CF /* address10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address10.png; sourceTree = "<group>"; };
+		D4677ABD189CCBDD00F128CF /* add20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add20.png; sourceTree = "<group>"; };
+		D4677ABE189CCBDD00F128CF /* add20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add20@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,6 +289,8 @@
 				D4677AB6189CC41E00F128CF /* twitter10@2x.png */,
 				D4677AB9189CC49A00F128CF /* address10@2x.png */,
 				D4677ABA189CC49A00F128CF /* address10.png */,
+				D4677ABD189CCBDD00F128CF /* add20.png */,
+				D4677ABE189CCBDD00F128CF /* add20@2x.png */,
 				D4677A8C189CA29900F128CF /* Paul-G-Glass.JPG */,
 				D4677A91189CA47100F128CF /* wellnessclub.jpg */,
 				D4677A44189C7A0600F128CF /* EasyCards-Info.plist */,
@@ -391,6 +397,7 @@
 			files = (
 				D4677A78189C7E4E00F128CF /* my_card25.png in Resources */,
 				D4677A55189C7A0600F128CF /* Images.xcassets in Resources */,
+				D4677AC0189CCBDD00F128CF /* add20@2x.png in Resources */,
 				D4677A8B189CA16E00F128CF /* template-bg-personal@2x.png in Resources */,
 				D4677ABC189CC49A00F128CF /* address10.png in Resources */,
 				D4677A77189C7E4E00F128CF /* my_card25@2x.png in Resources */,
@@ -412,6 +419,7 @@
 				D4677A74189C7D4800F128CF /* receiving25.png in Resources */,
 				D4677AB3189CC3F500F128CF /* email10@2x.png in Resources */,
 				D4677A96189CB07B00F128CF /* template-bg-business.png in Resources */,
+				D4677ABF189CCBDD00F128CF /* add20.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
