@@ -81,6 +81,7 @@
 		D4677ACE189CFA0500F128CF /* background-light30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ACC189CFA0500F128CF /* background-light30@2x.png */; };
 		D4677AD1189CFAC800F128CF /* background-light15.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ACF189CFAC800F128CF /* background-light15.png */; };
 		D4677AD2189CFAC800F128CF /* background-light15@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677AD0189CFAC800F128CF /* background-light15@2x.png */; };
+		D4677AD5189D122900F128CF /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4677AD4189D122900F128CF /* CoreBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,6 +164,8 @@
 		D4677ACC189CFA0500F128CF /* background-light30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-light30@2x.png"; sourceTree = "<group>"; };
 		D4677ACF189CFAC800F128CF /* background-light15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-light15.png"; sourceTree = "<group>"; };
 		D4677AD0189CFAC800F128CF /* background-light15@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-light15@2x.png"; sourceTree = "<group>"; };
+		D4677AD3189D116E00F128CF /* TransferService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferService.h; sourceTree = "<group>"; };
+		D4677AD4189D122900F128CF /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4677AD5189D122900F128CF /* CoreBluetooth.framework in Frameworks */,
 				8D3A867B189C8A14002406EF /* SystemConfiguration.framework in Frameworks */,
 				8D3A8678189C89F6002406EF /* StoreKit.framework in Frameworks */,
 				8D3A8675189C89E8002406EF /* Social.framework in Frameworks */,
@@ -240,6 +244,7 @@
 		D4677A3B189C7A0600F128CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D4677AD4189D122900F128CF /* CoreBluetooth.framework */,
 				8DCD0CE3189CB80400DE4CC6 /* Parse.framework */,
 				8D3A867A189C8A14002406EF /* SystemConfiguration.framework */,
 				8D3A8677189C89F6002406EF /* StoreKit.framework */,
@@ -280,6 +285,7 @@
 				D4677A8F189CA30200F128CF /* UIImage+Resize.m */,
 				D4677AC4189CE94D00F128CF /* BSKeyboardControls.m */,
 				D4677AC5189CE94D00F128CF /* BSKeyboardControls.h */,
+				D4677AD3189D116E00F128CF /* TransferService.h */,
 				D4677A54189C7A0600F128CF /* Images.xcassets */,
 				D4677A43189C7A0600F128CF /* Supporting Files */,
 			);

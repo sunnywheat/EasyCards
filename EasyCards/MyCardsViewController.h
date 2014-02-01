@@ -10,8 +10,6 @@
 
 @interface MyCardsViewController : UITableViewController <UIActionSheetDelegate>
 
-@property (strong, nonatomic) IBOutlet UILabel *categoryLabel;
-
 @property (nonatomic,assign) NSString *cardID;
 
 // cardDataString would be used for several time to store Name, Phone, Email and so on
