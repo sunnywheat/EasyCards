@@ -100,68 +100,125 @@
     [self.view bringSubviewToFront:profileImgView];
 
     
-/////////////
-/// Parse
-/////////////
-    // The image has now been uploaded to Parse. Associate it with a new object
-    PFObject* newCard = [PFObject objectWithClassName:@"Card"];
-    
-    [newCard setObject:@"Jack" forKey:@"Name"];
-    
-    [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        
-        if (succeeded){
-            NSLog(@"Object Uploaded!");
-        }
-        else{
-            NSString *errorString = [[error userInfo] objectForKey:@"error"];
-            NSLog(@"Error: %@", errorString);
-        }
-        
-    }];
-    
-    // Create the PFFile object with the data of the image
-    // Convert backgroundImg
-    NSData *backgroundImgViewData = UIImagePNGRepresentation(backgroundImgView.image);
-    PFFile *backgroundImgViewFile = [PFFile fileWithName:@"backgroundImg" data:backgroundImgViewData];
-    
-    // Convert profileImg
-    NSData *profileImgViewData = UIImagePNGRepresentation(profileImgView.image);
-    PFFile *profileImgViewFile = [PFFile fileWithName:@"profileImg" data:profileImgViewData];
-    
-    // Save the images (backgroundImgView, profileImgView) to Parse
-    [backgroundImgViewFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
 
-            [newCard setObject:backgroundImgViewFile forKey:@"backgroundImgView"];
-
-            [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error) {
-                    NSLog(@" backgroundImg Saved");
-                }
-                else{
-                    // Error
-                    NSLog(@"Error: %@ %@", error, [error userInfo]);
-                }
-            }];
-        }
-    }];
-    [profileImgViewFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
+    
+    // cardDataString need to store label information
+    self.cardDataString = [NSString stringWithFormat:@"%@",  @"Anvil"];
+    
+    // The index for the selected card.
+    int selectedCard = 1;
+    
+    if (indexPath.section == 0) {
+        // "templates" section
+        if (indexPath.row == selectedCard) {
+            /////////////
+            /// Parse
+            /////////////
+            // The image has now been uploaded to Parse. Associate it with a new object
+            PFObject* newCard = [PFObject objectWithClassName:@"Card"];
             
-            [newCard setObject:profileImgViewFile forKey:@"profileImgView"];
+            [newCard setObject:self.cardDataString forKey:@"cardDataString"];
             
             [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error) {
-                    NSLog(@"profileImg Saved");
+                
+                if (succeeded){
+                    NSLog(@"Object Uploaded!");
+                    self.cardID = [NSString stringWithFormat:@"%@", [newCard objectId]];
+                    NSLog(@"Object id %@",self.cardID);
                 }
                 else{
-                    // Error
-                    NSLog(@"Error: %@ %@", error, [error userInfo]);
+                    NSString *errorString = [[error userInfo] objectForKey:@"error"];
+                    NSLog(@"Error: %@", errorString);
+                }
+                
+            }];
+            
+            // Create the PFFile object with the data of the image
+            // Convert backgroundImg
+            NSData *backgroundImgViewData = UIImagePNGRepresentation(backgroundImgView.image);
+            PFFile *backgroundImgViewFile = [PFFile fileWithName:@"backgroundImg" data:backgroundImgViewData];
+            
+            // Convert profileImg
+            NSData *profileImgViewData = UIImagePNGRepresentation(profileImgView.image);
+            PFFile *profileImgViewFile = [PFFile fileWithName:@"profileImg" data:profileImgViewData];
+            
+            // Save the images (backgroundImgView, profileImgView) to Parse
+            // Save backgroundImgViewFile
+            [backgroundImgViewFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    
+                    [newCard setObject:backgroundImgViewFile forKey:@"backgroundImgView"];
+                    
+                    [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (!error) {
+                            NSLog(@" backgroundImg Saved");
+                        }
+                        else{
+                            // Error
+                            NSLog(@"Error: %@ %@", error, [error userInfo]);
+                        }
+                    }];
                 }
             }];
+            // Save profileImgViewFile
+            [profileImgViewFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    
+                    [newCard setObject:profileImgViewFile forKey:@"profileImgView"];
+                    
+                    [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (!error) {
+                            NSLog(@"profileImg Saved");
+                        }
+                        else{
+                            // Error
+                            NSLog(@"Error: %@ %@", error, [error userInfo]);
+                        }
+                    }];
+                }
+            }];
+
+            
+            
+            // Make sure to check this.
+            NSLog(@"We want to fetch data using this cardID %@",self.cardID);
+            
+            self.cardID = [NSString stringWithFormat:@"%@", @"UovN26xqat"];
+            
+            PFQuery *query = [PFQuery queryWithClassName:@"Card"];
+            [query getObjectInBackgroundWithId:self.cardID block:^(PFObject *recievedCard, NSError *error) {
+                // Do something with the returned PFObject in the gameScore variable.
+                // NSLog(@"%@", recievedCard);
+                NSString *objectId = recievedCard.objectId;
+                NSLog(@"Finally we query this objectId: %@", objectId);
+                
+                
+                PFFile *backgroundImgViewLoad = [recievedCard objectForKey:@"backgroundImgView"];
+                [backgroundImgViewLoad getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                    if (!error) {
+                        UIImage *image = [UIImage imageWithData:data];
+                    }
+                }];
+                
+                PFFile *profileImgViewLoad = [recievedCard objectForKey:@"profileImgView"];
+                [profileImgViewLoad getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                    if (!error) {
+                        UIImage *image = [UIImage imageWithData:data];
+                    }
+                }];
+                
+                
+                
+            }];
+            
+            
+   
+            
         }
-    }];
+    }
+    
+    
+
     
 
     
