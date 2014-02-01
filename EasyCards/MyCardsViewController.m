@@ -141,7 +141,7 @@
     self.cardDataString = [NSString stringWithFormat:@"%@",  @"Anvil"];
     
     // The index for the selected card.
-    int selectedCard = 1;
+    int selectedCard = 3;
 //    // Create the PFFile object with the data of the image
 //    // Convert backgroundImg
 //    NSData *backgroundImgViewData = UIImagePNGRepresentation(backgroundImageView.image);

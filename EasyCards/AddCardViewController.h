@@ -21,17 +21,24 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *categoryLabel;
 
+@property (strong, nonatomic) IBOutlet UITextField *nameTextField;
+@property (strong, nonatomic) IBOutlet UITextField *descriptionTextField;
 @property (strong, nonatomic) IBOutlet UITextField *phoneTextField;
 @property (strong, nonatomic) IBOutlet UITextField *twitterTextField;
 @property (strong, nonatomic) IBOutlet UITextField *emailTextField;
 @property (strong, nonatomic) IBOutlet UITextField *addressLineOneTextField;
 @property (strong, nonatomic) IBOutlet UITextField *addressLineTwoTextField;
-@property (strong, nonatomic) IBOutlet UITextField *nameTextField;
-@property (strong, nonatomic) IBOutlet UITextField *descriptionTextField;
+
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 
 
 @property (nonatomic, strong) NSString *cardCategory;
+
+// cardID is for bluetooth trasmittion.
+@property (nonatomic,assign) NSString *cardID;
+// cardDataString would be used for several time to store Name, Phone, Email and so on
+@property (nonatomic,assign) NSMutableString *cardDataString;
+
 
 @end

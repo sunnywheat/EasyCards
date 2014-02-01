@@ -8,6 +8,7 @@
 
 #import "AddCardViewController.h"
 #import "UIImage+Resize.h"
+#import <Parse/Parse.h>
 
 @interface AddCardViewController ()
 
@@ -28,6 +29,133 @@
 
 - (IBAction)save:(id)sender {
     // Save the newly created card info to both local and Parse
+    
+    // Start from !
+    // Totally 9 strings
+    self.cardDataString = [NSMutableString stringWithFormat:@"%@",  @"!#EC##N##"];
+    [self.cardDataString appendString: self.nameTextField.text];
+    [self.cardDataString appendString: @"!#EC##D##"];
+    [self.cardDataString appendString: self.descriptionTextField.text];
+    [self.cardDataString appendString: @"!#EC##P##"];
+    [self.cardDataString appendString: self.phoneTextField.text];
+    [self.cardDataString appendString: @"!#EC##T##"];
+    [self.cardDataString appendString: self.twitterTextField.text];
+    [self.cardDataString appendString: @"!#EC##E##"];
+    [self.cardDataString appendString: self.emailTextField.text];
+    [self.cardDataString appendString: @"!#EC##A1#"];
+    [self.cardDataString appendString: self.addressLineOneTextField.text];
+    [self.cardDataString appendString: @"!#EC##A2#"];
+    [self.cardDataString appendString: self.addressLineTwoTextField.text];
+    
+    NSLog(@"Card Information Data: %@",self.cardDataString);
+
+    
+    /////////////
+    /// Parse
+    /////////////
+    // The image has now been uploaded to Parse. Associate it with a new object
+    PFObject* newCard = [PFObject objectWithClassName:@"Card"];
+    
+    [newCard setObject:self.cardDataString forKey:@"cardDataString"];
+    
+    [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        
+        if (succeeded){
+            NSLog(@"Object Uploaded!");
+            self.cardID = [NSString stringWithFormat:@"%@", [newCard objectId]];
+            NSLog(@"Object id %@",self.cardID);
+        }
+        else{
+            NSString *errorString = [[error userInfo] objectForKey:@"error"];
+            NSLog(@"Error: %@", errorString);
+        }
+        
+    }];
+    
+    // Create the PFFile object with the data of the image
+    // Convert backgroundImg
+    NSData *backgroundImgViewData = UIImagePNGRepresentation(self.backgroundImageView.image);
+    PFFile *backgroundImgViewFile = [PFFile fileWithName:@"backgroundImg" data:backgroundImgViewData];
+    
+    // Convert profileImg
+    NSData *profileImgViewData = UIImagePNGRepresentation(self.profileImageView.image);
+    PFFile *profileImgViewFile = [PFFile fileWithName:@"profileImg" data:profileImgViewData];
+    
+    // Save the images (backgroundImgView, profileImgView) to Parse
+    // Save backgroundImgViewFile
+    [backgroundImgViewFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            
+            [newCard setObject:backgroundImgViewFile forKey:@"backgroundImgView"];
+            
+            [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    NSLog(@" backgroundImg Saved");
+                }
+                else{
+                    // Error
+                    NSLog(@"Error: %@ %@", error, [error userInfo]);
+                }
+            }];
+        }
+    }];
+    // Save profileImgViewFile
+    [profileImgViewFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            
+            [newCard setObject:profileImgViewFile forKey:@"profileImgView"];
+            
+            [newCard saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    NSLog(@"profileImg Saved");
+                }
+                else{
+                    // Error
+                    NSLog(@"Error: %@ %@", error, [error userInfo]);
+                }
+            }];
+        }
+    }];
+    
+    
+    
+    // Make sure to check this.
+    NSLog(@"We want to fetch data using this cardID %@",self.cardID);
+    
+    // Here I just take a case as the example
+    self.cardID = [NSString stringWithFormat:@"%@", @"PD2Lh6F4Nu"];
+    
+
+    PFQuery *query = [PFQuery queryWithClassName:@"Card"];
+    // [query whereKey:@"objectId" equalTo:@"PD2Lh6F4Nu"];
+    // NSArray* cardArray = [query findObjects];
+    // This line would make the app crash.
+    //NSLog(@"Finally we query this : %@", [cardArray objectAtIndex:2]);
+    // Check this for the reason. http://stackoverflow.com/questions/16691556/app-crashing-becuase-nsarray-objectforkey-objective-c
+
+    
+    
+    [query getObjectInBackgroundWithId:self.cardID block:^(PFObject *recievedCard, NSError *error) {
+        // Do something with the returned PFObject in the gameScore variable.
+        NSString *recievedData = recievedCard[@"cardDataString"];
+        
+        NSLog(@"%@", recievedData);
+        // NSString *objectId = [recievedCard cardDataString];
+        // NSLog(@"Finally we query this objectId: %@", objectId);
+    
+        // Decode the cardDataString
+        // Separate a string into its individual characters
+//        NSMutableArray *characters = [[NSMutableArray alloc] initWithCapacity:[recievedCard.cardDataString length]];
+//        for (int i=0; i < [myString length]; i++) {
+//            NSString *ichar  = [NSString stringWithFormat:@"%c", [myString characterAtIndex:i]];
+//            [characters addObject:ichar];
+//        }
+    
+
+    
+    }];
+    
+    
     
 }
 
