@@ -82,6 +82,13 @@
 		D4677AD5189D122900F128CF /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4677AD4189D122900F128CF /* CoreBluetooth.framework */; };
 		D4677ADB189D797300F128CF /* template-bg-personal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677AD9189D797300F128CF /* template-bg-personal@2x.png */; };
 		D4677ADC189D797300F128CF /* template-bg-personal.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ADA189D797300F128CF /* template-bg-personal.png */; };
+		D4677ADF189D7E5B00F128CF /* template-bg-personal-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ADD189D7E5B00F128CF /* template-bg-personal-old@2x.png */; };
+		D4677AE0189D7E5B00F128CF /* template-bg-personal-old.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677ADE189D7E5B00F128CF /* template-bg-personal-old.png */; };
+		D4677AE4189D801600F128CF /* CardDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4677AE2189D801600F128CF /* CardDetailViewController.m */; };
+		D4677AE5189D801600F128CF /* CardDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4677AE3189D801600F128CF /* CardDetailViewController.xib */; };
+		D4677AE8189D81A100F128CF /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = D4677AE7189D81A100F128CF /* GradientView.m */; };
+		D4677AF1189D907A00F128CF /* white-gesture.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677AEF189D907A00F128CF /* white-gesture.png */; };
+		D4677AF2189D907A00F128CF /* white-gesture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4677AF0189D907A00F128CF /* white-gesture@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +173,15 @@
 		D4677AD4189D122900F128CF /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		D4677AD9189D797300F128CF /* template-bg-personal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "template-bg-personal@2x.png"; sourceTree = "<group>"; };
 		D4677ADA189D797300F128CF /* template-bg-personal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "template-bg-personal.png"; sourceTree = "<group>"; };
+		D4677ADD189D7E5B00F128CF /* template-bg-personal-old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "template-bg-personal-old@2x.png"; sourceTree = "<group>"; };
+		D4677ADE189D7E5B00F128CF /* template-bg-personal-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "template-bg-personal-old.png"; sourceTree = "<group>"; };
+		D4677AE1189D801600F128CF /* CardDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardDetailViewController.h; sourceTree = "<group>"; };
+		D4677AE2189D801600F128CF /* CardDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardDetailViewController.m; sourceTree = "<group>"; };
+		D4677AE3189D801600F128CF /* CardDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardDetailViewController.xib; sourceTree = "<group>"; };
+		D4677AE6189D81A100F128CF /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
+		D4677AE7189D81A100F128CF /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
+		D4677AEF189D907A00F128CF /* white-gesture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-gesture.png"; sourceTree = "<group>"; };
+		D4677AF0189D907A00F128CF /* white-gesture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-gesture@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,6 +297,11 @@
 				D4677A84189C883400F128CF /* ReceivingViewController.m */,
 				D4677A7D189C877100F128CF /* MyCardsViewController.h */,
 				D4677A7E189C877100F128CF /* MyCardsViewController.m */,
+				D4677AE1189D801600F128CF /* CardDetailViewController.h */,
+				D4677AE2189D801600F128CF /* CardDetailViewController.m */,
+				D4677AE3189D801600F128CF /* CardDetailViewController.xib */,
+				D4677AE6189D81A100F128CF /* GradientView.h */,
+				D4677AE7189D81A100F128CF /* GradientView.m */,
 				D4677A8E189CA30200F128CF /* UIImage+Resize.h */,
 				D4677A8F189CA30200F128CF /* UIImage+Resize.m */,
 				D4677AC4189CE94D00F128CF /* BSKeyboardControls.m */,
@@ -295,6 +316,8 @@
 		D4677A43189C7A0600F128CF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D4677AEF189D907A00F128CF /* white-gesture.png */,
+				D4677AF0189D907A00F128CF /* white-gesture@2x.png */,
 				D4677ACF189CFAC800F128CF /* background-light15.png */,
 				D4677AD0189CFAC800F128CF /* background-light15@2x.png */,
 				D4677ACB189CFA0500F128CF /* background-light30.png */,
@@ -305,6 +328,8 @@
 				D4677A72189C7D4800F128CF /* receiving25.png */,
 				D4677A79189C822C00F128CF /* collection25@2x.png */,
 				D4677A7A189C822C00F128CF /* collection25.png */,
+				D4677ADD189D7E5B00F128CF /* template-bg-personal-old@2x.png */,
+				D4677ADE189D7E5B00F128CF /* template-bg-personal-old.png */,
 				D4677AD9189D797300F128CF /* template-bg-personal@2x.png */,
 				D4677ADA189D797300F128CF /* template-bg-personal.png */,
 				D4677A93189CB07B00F128CF /* template-bg-business@2x.png */,
@@ -426,14 +451,17 @@
 				D4677A78189C7E4E00F128CF /* my_card25.png in Resources */,
 				D4677A55189C7A0600F128CF /* Images.xcassets in Resources */,
 				D4677AC0189CCBDD00F128CF /* add20@2x.png in Resources */,
+				D4677AF1189D907A00F128CF /* white-gesture.png in Resources */,
 				D4677ABC189CC49A00F128CF /* address10.png in Resources */,
 				D4677AD2189CFAC800F128CF /* background-light15@2x.png in Resources */,
+				D4677ADF189D7E5B00F128CF /* template-bg-personal-old@2x.png in Resources */,
 				D4677A77189C7E4E00F128CF /* my_card25@2x.png in Resources */,
 				D4677AB7189CC41E00F128CF /* twitter10.png in Resources */,
 				D4677A7B189C822C00F128CF /* collection25@2x.png in Resources */,
 				D4677AAF189CC3CA00F128CF /* phone10@2x.png in Resources */,
 				D4677AB4189CC3F500F128CF /* email10.png in Resources */,
 				D4677A8D189CA29900F128CF /* Paul-G-Glass.JPG in Resources */,
+				D4677AE0189D7E5B00F128CF /* template-bg-personal-old.png in Resources */,
 				D4677A95189CB07B00F128CF /* template-bg-business@2x.png in Resources */,
 				D4677A47189C7A0600F128CF /* InfoPlist.strings in Resources */,
 				D4677AB0189CC3CA00F128CF /* phone10.png in Resources */,
@@ -446,9 +474,11 @@
 				D4677AB8189CC41E00F128CF /* twitter10@2x.png in Resources */,
 				D4677ACD189CFA0500F128CF /* background-light30.png in Resources */,
 				D4677A74189C7D4800F128CF /* receiving25.png in Resources */,
+				D4677AE5189D801600F128CF /* CardDetailViewController.xib in Resources */,
 				D4677ACE189CFA0500F128CF /* background-light30@2x.png in Resources */,
 				D4677AD1189CFAC800F128CF /* background-light15.png in Resources */,
 				D4677AB3189CC3F500F128CF /* email10@2x.png in Resources */,
+				D4677AF2189D907A00F128CF /* white-gesture@2x.png in Resources */,
 				D4677A96189CB07B00F128CF /* template-bg-business.png in Resources */,
 				D4677ABF189CCBDD00F128CF /* add20.png in Resources */,
 				D4677ADB189D797300F128CF /* template-bg-personal@2x.png in Resources */,
@@ -470,9 +500,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4677AE8189D81A100F128CF /* GradientView.m in Sources */,
 				D4677A7F189C877100F128CF /* MyCardsViewController.m in Sources */,
 				D4677AC6189CE94D00F128CF /* BSKeyboardControls.m in Sources */,
 				D4677AC3189CDD3200F128CF /* AddCardViewController.m in Sources */,
+				D4677AE4189D801600F128CF /* CardDetailViewController.m in Sources */,
 				D4677A85189C883400F128CF /* ReceivingViewController.m in Sources */,
 				D4677A4D189C7A0600F128CF /* AppDelegate.m in Sources */,
 				D4677A82189C879300F128CF /* CollectionViewController.m in Sources */,

@@ -205,8 +205,57 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    CardDetailViewController *detailController = [[CardDetailViewController alloc] initWithNibName:@"CardDetailViewController" bundle:nil];
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    UIImageView *backgroundImageView = (UIImageView *)[detailController.view viewWithTag:1000];
+    UIImageView *profileImageView = (UIImageView *)[detailController.view viewWithTag:1001];
+    
+    UILabel *nameLabel = (UILabel *)[detailController.view viewWithTag:2001];
+    UILabel *descriptionLabel = (UILabel *)[detailController.view viewWithTag:2002];
+    UILabel *phoneLabel = (UILabel *)[detailController.view viewWithTag:2003];
+    UILabel *twitterLabel = (UILabel *)[detailController.view viewWithTag:2004];
+    UILabel *emailLabel = (UILabel *)[detailController.view viewWithTag:2005];
+    UILabel *addressLineOneLabel = (UILabel *)[detailController.view viewWithTag:2006];
+    UILabel *addressLineTwoLabel = (UILabel *)[detailController.view viewWithTag:2007];
+    
+    UIImageView *backgroundImageViewC = (UIImageView *)[cell viewWithTag:1000];
+    UIImageView *profileImageViewC = (UIImageView *)[cell viewWithTag:1001];
+    
+    UILabel *nameLabelC = (UILabel *)[cell viewWithTag:2001];
+    UILabel *descriptionLabelC = (UILabel *)[cell viewWithTag:2002];
+    UILabel *phoneLabelC = (UILabel *)[cell viewWithTag:2003];
+    UILabel *twitterLabelC = (UILabel *)[cell viewWithTag:2004];
+    UILabel *emailLabelC = (UILabel *)[cell viewWithTag:2005];
+    UILabel *addressLineOneLabelC = (UILabel *)[cell viewWithTag:2006];
+    UILabel *addressLineTwoLabelC = (UILabel *)[cell viewWithTag:2007];
+    
+    nameLabel.text = nameLabelC.text;
+    descriptionLabel.text = descriptionLabelC.text;
+    phoneLabel.text = phoneLabelC.text;
+    twitterLabel.text = twitterLabelC.text;
+    emailLabel.text = emailLabelC.text;
+    addressLineOneLabel.text = addressLineOneLabelC.text;
+    addressLineTwoLabel.text = addressLineTwoLabelC.text;
+    backgroundImageView.image = backgroundImageViewC.image;
+    profileImageView.image = profileImageViewC.image;
+    
+    //self.navigationController.navigationBarHidden = YES;
+    //self.tabBarController.tabBar.hidden = YES;
+    //[self setNeedsStatusBarAppearanceUpdate];
+    
+    [detailController presentInParentViewController:self];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+/*
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+*/
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CardDetailViewController.h"
 
 @interface MyCardsViewController : UITableViewController <UIActionSheetDelegate>
 
