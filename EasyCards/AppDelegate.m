@@ -25,20 +25,20 @@
     
     // Create Some Sample Objects for the Parse test.
     
-        PFObject *anotherPlayer = [PFObject objectWithClassName:@"Player"];
-        [anotherPlayer setObject:@"Jack" forKey:@"Name"];
-        [anotherPlayer setObject:[NSNumber numberWithInt:840] forKey:@"Score"];
-        [anotherPlayer saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            
-            if (succeeded){
-                NSLog(@"Object Uploaded!");
-            }
-            else{
-                NSString *errorString = [[error userInfo] objectForKey:@"error"];
-                NSLog(@"Error: %@", errorString);
-            }
-            
-        }];
+    //    PFObject *anotherPlayer = [PFObject objectWithClassName:@"Player"];
+    //    [anotherPlayer setObject:@"Jack" forKey:@"Name"];
+    //    [anotherPlayer setObject:[NSNumber numberWithInt:840] forKey:@"Score"];
+    //    [anotherPlayer saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    //        
+    //        if (succeeded){
+    //            NSLog(@"Object Uploaded!");
+    //        }
+    //        else{
+    //            NSString *errorString = [[error userInfo] objectForKey:@"error"];
+    //            NSLog(@"Error: %@", errorString);
+    //        }
+    //        
+    //    }];
     
     
     return YES;
