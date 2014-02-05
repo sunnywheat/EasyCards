@@ -338,7 +338,7 @@
                             [[NSUserDefaults standardUserDefaults] setObject:self.allReceivedCardIDs forKey:@"AllReceivedCardIDs"];
                             
                             
-                            [self performSelector:@selector(rotateAndShrink) withObject:self afterDelay:3.0f];
+                            [self performSelector:@selector(rotateAndShrink) withObject:self afterDelay:2.0f];
                             
                             
                             
